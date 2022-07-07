@@ -1,0 +1,53 @@
+{% extends '_base.html' %}
+{% block title %}dpa{% endblock title %}
+{% block content %}
+
+{% block articles %}
+    <div class="container">
+        <div><h3 class="m-2 mb-4">Data Protection Act, 2019.</h3> </div>
+
+        <div class="row gx-5">
+
+          {% block side-nav %}
+            {% include 'sidenav.html' %}
+          {% endblock side-nav %}
+
+          {% block right-display %}
+            <div class="col-lg-12 col-xl-8">
+                <div class="shadow">
+                    <div class="card-body dpa1" data-id="p4">
+                        <h5 class="card-title text-center" id="article1"><em>DPA - Sec. 8</em></h5>
+                        <h3 class="text-center">Functions of the Office</h3>
+                        <p class="card-text m-4">
+                            <ol type="1">
+                                <li class="mt-3">The Office shall—
+                                    <ol type="a">
+                                        <li class="mt-3">Oversee the implementation of and be responsible for the enforcement of this Act;</li>
+                                        <li class="mt-3">Establish and maintain a register of data controllers and data processors;</li>
+                                        <li class="mt-3">Exercise oversight on data processing operations, either of own motion or at the request of a data subject, and verify whether the processing of data is done in accordance with this Act;</li>
+                                        <li class="mt-3">Promote self-regulation among data controllers and data processors;</li>
+                                        <li class="mt-3">Conduct an assessment, on its own initiative of a public or private body, or at the request of a private or public body for the purpose of ascertaining whether information is processed according to the provisions of this Act or any other relevant law;</li>
+                                        <li class="mt-3">Receive and investigate any complaint by any person on infringements of the rights under this Act;</li>
+                                        <li class="mt-3">Take such measures as may be necessary to bring the provisions of this Act to the knowledge of the general public;</li>
+                                        <li class="mt3">Carry out inspections of public and private entities with a view to evaluating the processing of personal data;</li>
+                                        <li class="mt-3">Promote international cooperation in matters relating to data protection and ensure country's compliance on data protection obligations under international conventions and agreements;</li>
+                                        <li class="mt-3">Undertake research on developments in data processing of personal data and ensure that there is no significant risk or adverse effect of any developments on the privacy of individuals; and</li>
+                                        <li class="mt-3">Perform such other functions as may be prescribed by any other law or as necessary for the promotion of object of this Act.</li>
+                                    </ol>
+                                </li>
+                                <li class="mt-3">The Office of the Data Commissioner may, in the performance of its functions collaborate with the national security organs</li>
+                                <li class="mt-3">The Data Commissioner shall act independently in exercise of powers and carrying out of functions under this Act.</li>
+                            </ol>
+                        </p>
+                    </div>
+                    <div>
+
+                    </div>
+                </div>
+            </div>
+          {% endblock right-display %}
+          </div>
+    </div>
+{% endblock articles %}
+{% endblock content %}
+

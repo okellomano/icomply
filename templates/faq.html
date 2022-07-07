@@ -1,0 +1,53 @@
+{% extends '_base.html' %}
+{% block title %}frequent questions {% endblock title %}
+{% block content %}
+    <div class="container">
+        <div>
+            <div class="col-lg-1 col-sm-12 border-bottom border-primary"><h3><strong>FAQ</strong></h3></div>
+
+            <h4 class="mt-4 mb-4">Below are some of the most common questions and answers about the DPA.</h4>
+        </div>
+        <div class="accordion" id="accordionExample">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                What is The DPA?
+              </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                <strong>The Data Protection Act, 2019</strong>
+                  Any organization that processes the personal data of people in the Kenya must comply with the DPA. “Processing” is a broad term that covers just about anything you can do with data: collection, storage, transmission, analysis, etc. “Personal data” is any information that relates to a person, such as names, email addresses, IP addresses, eye color, political affiliation, and so on. The DPA is also not limited to for-profit companies.
+              </div>
+            </div>
+        </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTwo">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            Who must comply with the DPA?
+          </button>
+        </h2>
+        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <strong>DPA compliant</strong>
+              Any organization that processes the personal data of people in the Kenya must comply with the DPA. “Processing” is a broad term that covers just about anything you can do with data: collection, storage, transmission, analysis, etc. “Personal data” is any information that relates to a person, such as names, email addresses, IP addresses, eye color, political affiliation, and so on. The DPA is also not limited to for-profit companies.
+
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingThree">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+            How do I comply with the DPA?
+          </button>
+        </h2>
+        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <strong>Start here.</strong>
+              Any organization that processes the personal data of people in the Kenya must comply with the DPA. “Processing” is a broad term that covers just about anything you can do with data: collection, storage, transmission, analysis, etc. “Personal data” is any information that relates to a person, such as names, email addresses, IP addresses, eye color, political affiliation, and so on. The DPA is also not limited to for-profit companies.
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+{% endblock content %}

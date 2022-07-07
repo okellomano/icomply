@@ -1,0 +1,50 @@
+{% extends '_base.html' %}
+{% block title %}dpa{% endblock title %}
+{% block content %}
+
+{% block articles %}
+    <div class="container">
+        <div><h3 class="m-2 mb-4">Data Protection Act, 2019.</h3> </div>
+
+        <div class="row gx-5">
+
+          {% block side-nav %}
+            {% include 'sidenav.html' %}
+          {% endblock side-nav %}
+
+          {% block right-display %}
+            <div class="col-lg-12 col-xl-8">
+                <div class="shadow">
+                    <div class="card-body dpa1" data-id="p4">
+                        <h5 class="card-title text-center" id="article1"><em>DPA - Sec. 6</em></h5>
+                        <h3 class="text-center">Appointment of the Data Commissioner</h3>
+                        <p class="card-text m-4">
+                            <ol type="1">
+                                <li class="mt-3">The Public Service Commission shall, whenever a vacancy arises in the position of the Data Commissioner, initiate the recruitment process.</li>
+                                <li class="mt-3">The Public Service Commission shall, within seven days of being notified of a vacancy under subsection (1), invite applications from persons who qualify for nomination and appointment for the position of the Data Commissioner.</li>
+                                <li class="mt-3">The Public Service Commission shall within twenty-one days of receipt of applications under subsection (2)—
+                                    <ol type="a">
+                                        <li class="mt-3">Consider the applications received to determine their compliance with this Act;</li>
+                                        <li class="mt-3">Shortlist qualified applicants;</li>
+                                        <li class="mt-3">Publish and publicise the names of the applicants and the shortlisted applicants;</li>
+                                        <li class="mt-3">Conduct interviews of the shortlisted persons in an open and transparent process;</li>
+                                        <li class="mt-3">Nominate three qualified applicants in the order of merit for the position of Data Commissioner; and</li>
+                                        <li class="mt-3">Submit the names of the persons nominated under paragraph (e) to the President.</li>
+                                    </ol>
+                                </li>
+                                <li class="mt-3">The President shall nominate and, with approval of the National Assembly, appoint the Data Commissioner.</li>
+
+                            </ol>
+                        </p>
+                    </div>
+                    <div>
+
+                    </div>
+                </div>
+            </div>
+          {% endblock right-display %}
+          </div>
+    </div>
+{% endblock articles %}
+{% endblock content %}
+

@@ -1,0 +1,42 @@
+{% extends '_base.html' %}
+{% block title %}dpa{% endblock title %}
+{% block content %}
+
+{% block articles %}
+    <div class="container">
+        <div><h3 class="m-2 mb-4">Data Protection Act, 2019.</h3> </div>
+
+        <div class="row gx-5">
+
+          {% block side-nav %}
+            {% include 'sidenav.html' %}
+          {% endblock side-nav %}
+
+          {% block right-display %}
+            <div class="col-lg-12 col-xl-8">
+                <div class="shadow">
+                    <div class="card-body dpa1" data-id="p4">
+                        <h5 class="card-title text-center" id="article1"><em>DPA - Sec. 3</em></h5>
+                        <h3 class="text-center">Object and Purpose of this Act</h3>
+                        <p class="card-text m-4">
+                            The object and purpose of this Act is—
+                            <ol type="a">
+                                <li class="mt-3">To regulate the processing of personal data;</li>
+                                <li class="mt-3">To ensure that the processing of personal data of a data subject is guided by the principles set out in section 25;</li>
+                                <li class="mt-3">To protect the privacy of individuals;</li>
+                                <li class="mt-3">To establish the legal and institutional mechanism to protect personal data; and</li>
+                                <li class="mt-3">To provide data subjects with rights and remedies to protect their personal data from processing that is not in accordance with this Act</li>
+                            </ol>
+                        </p>
+                    </div>
+                    <div>
+
+                    </div>
+                </div>
+            </div>
+          {% endblock right-display %}
+          </div>
+    </div>
+{% endblock articles %}
+{% endblock content %}
+

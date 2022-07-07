@@ -1,0 +1,50 @@
+{% extends '_base.html' %}
+{% block title %}dpa{% endblock title %}
+{% block content %}
+
+{% block articles %}
+    <div class="container">
+        <div><h3 class="m-2 mb-4">Data Protection Act, 2019.</h3> </div>
+
+        <div class="row gx-5">
+
+          {% block side-nav %}
+            {% include 'sidenav.html' %}
+          {% endblock side-nav %}
+
+          {% block right-display %}
+            <div class="col-lg-12 col-xl-8">
+                <div class="shadow">
+                    <div class="card-body dpa1" data-id="p4">
+                        <h5 class="card-title text-center" id="article1"><em>DPA - Sec. 12</em></h5>
+                        <h3 class="text-center">Removal of the Data Commissioner.</h3>
+                        <p class="card-text m-4">
+                            <ol type="1">
+                                <li class="mt-3">A person desiring the removal of Data Commissioner on any ground specified under section 11 (d) . may present a complaint to the Public Service Commission setting out the alleged facts constituting that ground.</li>
+                                <li class="mt-3">Subject to Article 47 of the Constitution, the Public Service Commission shall consider the complaint and, if satisfied that the complaint discloses a ground under <a href="{% url 'art11' %}">section 11</a> (d), shall —
+                                    <ol type="a">
+                                        <li class="mt-3">Investigate the matter expeditiously;</li>
+                                        <li class="mt-3">Report on the facts; and</li>
+                                        <li class="mt-3">Make a recommendation to the Cabinet Secretary.</li>
+                                    </ol>
+                                </li>
+                                <li class="mt-3">Prior to any action under sub-section (2), the Data Commissioner shall be —
+                                    <ol type="a">
+                                        <li class="mt-3">Informed, in writing, of the reasons for the intended removal; and</li>
+                                        <li class="mt-3">Offered an opportunity to put in a defence against any such allegations.</li>
+                                    </ol>
+                                </li>
+                            </ol>
+                        </p>
+                    </div>
+                    <div>
+
+                    </div>
+                </div>
+            </div>
+          {% endblock right-display %}
+          </div>
+    </div>
+{% endblock articles %}
+{% endblock content %}
+

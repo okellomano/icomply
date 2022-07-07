@@ -1,0 +1,48 @@
+{% extends '_base.html' %}
+{% block title %}dpa{% endblock title %}
+{% block content %}
+
+{% block articles %}
+    <div class="container">
+        <div><h3 class="m-2 mb-4">Data Protection Act, 2019.</h3> </div>
+
+        <div class="row gx-5">
+
+          {% block side-nav %}
+            {% include 'sidenav.html' %}
+          {% endblock side-nav %}
+
+          {% block right-display %}
+            <div class="col-lg-12 col-xl-8">
+                <div class="shadow">
+                    <div class="card-body dpa1" data-id="p4">
+                        <h5 class="card-title text-center" id="article1"><em>DPA - Sec. 5</em></h5>
+                        <h3 class="text-center">Establishment of the Office</h3>
+                        <p class="card-text m-4">
+                            <ol type="1">
+                                <li class="mt-3">There is established the office of the Data Protection Commissioner which shall be a body corporate with perpetual succession and a common seal and shall in its corporate name, be capable of —
+                                    <ol type="a">
+                                        <li class="mt-3">Suing and being sued;</li>
+                                        <li class="mt-3">Taking, purchasing or otherwise acquiring, holding, charging or disposing of movable and immovable property;</li>
+                                        <li class="mt-3">Entering into contracts; and</li>
+                                        <li class="mt-3">Doing such other legal acts necessary for the proper performance of the functions of the Office.</li>
+                                    </ol>
+                                </li>
+                                <li class="mt-3">The Office is designated as a State Office in accordance with Article 260 (q) of the Constitution.</li>
+                                <li class="mt-3">The Office shall comprise the Data Commissioner as its head and accounting officer, and other staff appointed by the Data Commissioner.</li>
+                                <li class="mt-3">The Office shall ensure reasonable access to its services in all parts of the Republic.</li>
+                                <li class="mt-3">The Data Commissioner shall in consultation with the Cabinet Secretary, establish such directorates as may be necessary for the better carrying of the functions of the Office.</li>
+                            </ol>
+                        </p>
+                    </div>
+                    <div>
+
+                    </div>
+                </div>
+            </div>
+          {% endblock right-display %}
+          </div>
+    </div>
+{% endblock articles %}
+{% endblock content %}
+
