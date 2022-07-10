@@ -8,9 +8,14 @@ from . import views
 
 urlpatterns = [
     path('', HomePageView.as_view(), name='home'),
-    path('checklist/', ChecklistPageView.as_view(), name='checklist'),
+    # path('checklist/', ChecklistPageView.as_view(), name='checklist'),
+    path('checklist/', views.ChecklistView, name='checklist'),
     path('faq/', FaqPageView.as_view(), name='faq'),
-    path('dpa/', DpaPageView.as_view(), name='dpa'),
+    # path('dpa/', DpaPageView.as_view(), name='dpa'),
+    path('dpa/', views.dpa_view, name='dpa'),
+    path('regulations/', views.dpa_regulations_view, name='dpa_regulations'),
+    path('checklist_submitted/', views.ChecklistSubmitView.as_view(), name='checklist_submitted'),
+
 
 
     # Articles

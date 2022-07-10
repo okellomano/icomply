@@ -1,40 +1,12 @@
 from django.db import models
+from django.contrib.auth import get_user_model
 
 
-# class Appl(models.Model):
-#     name = models.CharField(max_length=100)
-#     age = models.IntegerField(default=1)
-#
-#
-# class AcademicInstitution(models.Model):
-#     institution = models.CharField(max_length=100)
-#     date_from = models.DateField()
-#     date_to = models.DateField()
-#     achievements = models.FileField(upload_to='media/%Y/%m/%d')
-#     appl = models.ForeignKey(Appl, on_delete=models.CASCADE, null=True)
+class Checklist(models.Model):
+    # organization = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    protection = models.BooleanField('Take Data Protection into account at all times', default=False)
+    encrypt = models.BooleanField('Encrypt, pseudonymize, or anonymize personal data whenever possible', default=False)
+    policy = models.BooleanField('Create an internal security policy for your team members, and build awareness about data protection', default=False)
 
 
-# class Checklist(models.Model):
-#     description = models.CharField(max_length=200)
-#     checked = models.BooleanField(default=False)
-#
-#
-# class Organization(models.Model):
-#     org_name = models.CharField(max_length=50)
-#     email = models.EmailField()
-#     address = models.CharField(max_length=100)
-#     bs_licence_no = models.CharField(max_length=10)
-#
-#
-# class Category(models.Model):
-#     description = models.CharField(max_length=10)
-#     organization = models.ForeignKey(Organization)
-#
-#
-# class Report(models.Model):
-#     pass
-#
-#
-# class Compliance(models.Model):
-#     pass
-#
+

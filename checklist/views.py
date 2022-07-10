@@ -1,13 +1,47 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import TemplateView, ListView
+from django.http import FileResponse, Http404, HttpResponse
+from django.templatetags.static import static
+import os
+from django.conf import settings
 
-from django.views.generic import TemplateView
+from django.shortcuts import render, redirect
+from .forms import ChecklistForm
+from .models import Checklist
 
 
 class HomePageView(TemplateView):
     template_name = 'home.html'
 
 
-class ChecklistPageView(TemplateView):
+class ChecklistPageView(LoginRequiredMixin, ListView):
+    model = Checklist
+    context_object_name = 'checklists'
     template_name = 'checklist.html'
+    login_url = 'account_login'
+
+
+# def dpa_view(request):
+#     try:
+#         return FileResponse(open('/dpa/TheDataProtectionAct__No24of2019.pdf', 'rb'), content_type='application/pdf')
+#     except FileNotFoundError:
+#         raise Http404
+#         file = open(os.path.join(settings.STATIC_ROOT, 'app/a.txt'))
+
+def dpa_view(request):
+    with open(os.path.join(settings.STATIC_ROOT, 'dpa/TheDataProtectionAct__No24of2019.pdf'), 'rb') as pdf:
+        response = HttpResponse(pdf.read(), content_type='application/pdf')
+        response['Content-Disposition'] = 'inline;filename=TheDataProtectionAct__No24of2019.pdf'
+        return response
+    pdf.closed
+
+
+def dpa_regulations_view(request):
+    with open(os.path.join(settings.STATIC_ROOT, 'dpa/DataProtectionRegulations,2021.pdf'), 'rb') as pdf:
+        response = HttpResponse(pdf.read(), content_type='application/pdf')
+        response['Content-Disposition'] = 'inline;filename=DataProtectionRegulations.pdf'
+        return response
+    pdf.closed
 
 
 class DpaPageView(TemplateView):
@@ -16,6 +50,28 @@ class DpaPageView(TemplateView):
 
 class FaqPageView(TemplateView):
     template_name = 'faq.html'
+
+
+def ChecklistView(request):
+    if request.method == 'POST':
+        form = ChecklistForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('checklist_submitted')
+    else:
+        form = ChecklistForm()
+        context = {'form': form}
+    return render(request, 'checklist.html', context)
+
+
+class ChecklistSubmitView(TemplateView):
+    template_name = 'checklist_submit.html'
+
+
+
+
+
+
 
 
 # Articles
