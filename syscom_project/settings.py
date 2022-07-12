@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'ckeditor',
+    'multiselectfield',
 ]
 
 MIDDLEWARE = [
@@ -152,7 +153,6 @@ AUTH_USER_MODEL = 'users.CustomUser'
 
 
 LOGIN_REDIRECT_URL = 'home'
-# LOGOUT_REDIRECT_URL = 'home'
 ACCOUNT_LOGOUT_REDIRECT = 'home'
 
 # django-crispy-forms
@@ -177,6 +177,8 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_UNIQUE = True
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+DEFAULT_FROM_EMAIL = 'admin@icomply.com'
 
 # django allauth forms
 ACCOUNT_FORMS = {

@@ -1,13 +1,14 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.views.generic import TemplateView, ListView
-from django.http import FileResponse, Http404, HttpResponse
-from django.templatetags.static import static
+from django.http import HttpResponse
 import os
 from django.conf import settings
 
 from django.shortcuts import render, redirect
-from .forms import ChecklistForm
-from .models import Checklist
+from .forms import ChecklistForm, DpaChecklistForm
+from .models import Checklist, DpaChecklist
 
 
 class HomePageView(TemplateView):
@@ -20,13 +21,6 @@ class ChecklistPageView(LoginRequiredMixin, ListView):
     template_name = 'checklist.html'
     login_url = 'account_login'
 
-
-# def dpa_view(request):
-#     try:
-#         return FileResponse(open('/dpa/TheDataProtectionAct__No24of2019.pdf', 'rb'), content_type='application/pdf')
-#     except FileNotFoundError:
-#         raise Http404
-#         file = open(os.path.join(settings.STATIC_ROOT, 'app/a.txt'))
 
 def dpa_view(request):
     with open(os.path.join(settings.STATIC_ROOT, 'dpa/TheDataProtectionAct__No24of2019.pdf'), 'rb') as pdf:
@@ -52,24 +46,23 @@ class FaqPageView(TemplateView):
     template_name = 'faq.html'
 
 
+@login_required(login_url='account_login')
 def ChecklistView(request):
     if request.method == 'POST':
+        # form = DpaChecklistForm(request.POST)
         form = ChecklistForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect('checklist_submitted')
     else:
         form = ChecklistForm()
+        # form = DpaChecklistForm()
         context = {'form': form}
     return render(request, 'checklist.html', context)
 
 
 class ChecklistSubmitView(TemplateView):
     template_name = 'checklist_submit.html'
-
-
-
-
 
 
 
