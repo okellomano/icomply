@@ -7,8 +7,8 @@ import os
 from django.conf import settings
 
 from django.shortcuts import render, redirect
-from .forms import ChecklistForm, DpaChecklistForm
-from .models import Checklist
+from .forms import ChecklistForm, DpaChecklistForm, AddChecklistForm
+from .models import Checklist, ChecklistsModel
 
 
 class HomePageView(TemplateView):
@@ -59,6 +59,34 @@ def ChecklistView(request):
         form = DpaChecklistForm()
         context = {'form': form}
     return render(request, 'checklist.html', context)
+
+
+def checklist_view(request):
+    if request.method == 'POST':
+        checklists = ChecklistsModel.objects.all()
+        score = 0
+        missed = 0
+        correct = 0
+        total = 0
+
+        for checklist in checklists:
+            total += 1
+            if checklist.score == request.POST.get(checklist.description):
+                score += 10
+                correct += 1
+            else:
+                missed += 1
+
+        percent = score/(total * 10) * 100
+        context = {
+            'score': score,
+            'percent': percent
+        }
+        return render(request, 'result.html', context)
+    else:
+        checklists = ChecklistsModel.objects.all()
+        context = {'checklists': checklists}
+        return render(request, 'checklist_quiz.html', context)
 
 
 class ChecklistSubmitView(TemplateView):

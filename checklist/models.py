@@ -64,3 +64,14 @@ class UsersChecklist(models.Model):
     governance = models.ManyToManyField(Governance)
 
 
+class ChecklistsModel(models.Model):
+    description = models.CharField(max_length=100)
+    checklist_item1 = models.CharField(max_length=250)
+    checklist_item2 = models.CharField(max_length=250)
+    checklist_item3 = models.CharField(max_length=250)
+    checklist_item4 = models.CharField(max_length=250)
+    checklist_item5 = models.CharField(max_length=250)
+    score = models.CharField(max_length=250)
+
+    def __str__(self):
+        return self.description
