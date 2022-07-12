@@ -5,7 +5,8 @@ from .models import Checklist, DpaChecklist
 class ChecklistForm(forms.ModelForm):
     class Meta:
         model = Checklist
-        fields = ('protection', 'encrypt', 'policy')
+        # fields = ('protection', 'encrypt', 'policy')
+        fields = ('protection',)
 
 
 class DpaChecklistForm(forms.ModelForm):

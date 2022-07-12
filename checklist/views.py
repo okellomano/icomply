@@ -8,7 +8,7 @@ from django.conf import settings
 
 from django.shortcuts import render, redirect
 from .forms import ChecklistForm, DpaChecklistForm
-from .models import Checklist, DpaChecklist
+from .models import Checklist
 
 
 class HomePageView(TemplateView):
@@ -49,14 +49,14 @@ class FaqPageView(TemplateView):
 @login_required(login_url='account_login')
 def ChecklistView(request):
     if request.method == 'POST':
-        # form = DpaChecklistForm(request.POST)
-        form = ChecklistForm(request.POST)
+        form = DpaChecklistForm(request.POST)
+        # form = ChecklistForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect('checklist_submitted')
     else:
-        form = ChecklistForm()
-        # form = DpaChecklistForm()
+        # form = ChecklistForm()
+        form = DpaChecklistForm()
         context = {'form': form}
     return render(request, 'checklist.html', context)
 

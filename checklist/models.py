@@ -26,9 +26,9 @@ DATA_SECURITY = (
 
 class Checklist(models.Model):
     # organization = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
-    protection = models.BooleanField('Take Data Protection into account at all times', default=False)
-    encrypt = models.BooleanField('Encrypt, pseudonymize, or anonymize personal data whenever possible', default=False)
-    policy = models.BooleanField('Create an internal security policy for your team members, and build awareness about data protection', default=False)
+    protection = models.CharField(max_length=100)
+    # encrypt = models.BooleanField('Encrypt, or anonymize personal data whenever possible', default=False)
+    # policy = models.BooleanField('Create an internal security policy for your team members', default=False)
 
 
 class DpaChecklist(models.Model):
@@ -37,5 +37,30 @@ class DpaChecklist(models.Model):
     privacy = MultiSelectField(choices=PRIVACY_RIGHTS)
     security = MultiSelectField(choices=DATA_SECURITY)
 
+
+class Governance(models.Model):
+    dpo = models.BooleanField('Appoint a Data Protection Officer (if necessary)', default=False)
+    dpa_implementation = models.BooleanField('Designate someone responsible for ensuring DPA compliance in your organization', default=False)
+    agreement = models.BooleanField('Sign a data processing agreement between your organization and third parties', default=False)
+
+
+class PrivacyRights(models.Model):
+    stop_processing = models.BooleanField('It is easy for your customers to ask you to stop processing their data', default=False)
+    delete_data = models.BooleanField('It is easy for your customers to request you t have their personal data deleted', default=False)
+    update = models.BooleanField('It is easy for your customers to correct or update inaccurate of incomplete information', default=False)
+    request_info = models.BooleanField('It is easy for your customers to request and receive all the information you have about them', default=False)
+
+
+class DataSecurity(models.Model):
+    policies = models.BooleanField('Have internal security policy for your team members, and build awareness on data protection', default=False)
+    notification = models.BooleanField('Have a mechanism to notify authorities and data subjects in the event of a data breach', default=False)
+    encryption = models.BooleanField('Encrypt or anonymize personal data wherever possible', default=False)
+
+
+class UsersChecklist(models.Model):
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    data_security = models.ManyToManyField(DataSecurity)
+    privacy = models.ManyToManyField(PrivacyRights)
+    governance = models.ManyToManyField(Governance)
 
 
