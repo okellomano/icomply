@@ -7,10 +7,10 @@
 {% block main_page %}
     <div class="row justify-content-center mt-4">
         <div class="shadow col-sm-6 col-lg-4 justify-content-center m-4 pb-4">
-             <a href="{% url 'home' %}"><img class="rounded mx-auto d-block rounded-circle" src="{% static 'images/logo.png' %}" height="140" width="200"></a><hr>
+             <a href="{% url 'checklist:home' %}"><img class="rounded mx-auto d-block rounded-circle" src="{% static 'images/logo.png' %}" height="140" width="200"></a><hr>
             <h5 class="text-primary">Checklist submitted successfully!</h5>
             <p class="mb-4">Thank you for submitting the checklist, you shall receive your compliance status as soon as the verification process is done!</p>
-            <a href="{% url 'home' %}" class="btn btn-primary">Return to homepage</a>
+            <a href="{% url 'checklist:home' %}" class="btn btn-primary">Return to homepage</a>
         </div>
     </div>
 {% endblock main_page %}

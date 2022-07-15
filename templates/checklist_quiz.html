@@ -5,58 +5,38 @@
 {% block title %}checklist{% endblock title %}
 {% block content %}
     <div>
-        <div class="container bg-cyan"><h3 class="m-2 mt-4">The Data Protection Act, 2019 Checklist for Data Processors</h3> </div>
-        <div class="container border-top overflow-hidden">
-            <h4 class="mt-4">The DPA Compliance Checklist</h4>
+        <div class="container bg-cyan"><h3 class="m-2 mt-4">The Data Protection Act, 2019 Checklist for Data Processors</h3></div>
+        <div class="container overflow-hidden">
           <form method='post' class="mt-4">
             {% csrf_token %}
-
-              {% for checklist in checklists %}
-                <div class="form-group">
-                    <label for="description">{{ checklist.description }}</label>
-                </div>
-                <div class="form-check">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="{{ checklist.description }}" id="gridcheckbox1" value="option1">
-                        <label class="form-check-label" for="gridcheckbox1">
-                            {{ checklist.checklist_item1 }}
-                        </label>
-                    </div>
-
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="{{ checklist.description }}" id="gridcheckbox2" value="option2">
-                        <label class="form-check-label" for="gridcheckbox2">
-                            {{ checklist.checklist_item2 }}
-                        </label>
-                    </div>
-
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="{{ checklist.description }}" id="gridcheckbox3" value="option3">
-                        <label class="form-check-label" for="gridcheckbox3">
-                            {{ checklist.checklist_item3 }}
-                        </label>
-                    </div>
-
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="{{ checklist.description }}" id="gridcheckbox4" value="option4">
-                        <label class="form-check-label" for="gridcheckbox4">
-                            {{ checklist.checklist_item4 }}
-                        </label>
-                    </div>
-
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="{{ checklist.description }}" id="gridcheckbox5" value="option5">
-                        <label class="form-check-label" for="gridcheckbox5">
-                            {{ checklist.checklist_item5 }}
-                        </label>
-                    </div>
-                </div>
+              {% for category in categories %}
+              <table class="table table-borderless table-hover mb-4">
+                  <thead>
+                    <tr>
+                        <th scope="col"><h4>{{ category.type }}</h4></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for item in category.categories.all %}
+                    <tr>
+                        <td>
+                            {% if item.implemented %}
+                                <input class="form-check-input" type="checkbox"  checked="checked" value={{ item.value }} name="boxes">
+                            {% else %}
+                                <input class="form-check-input" type="checkbox"  value={{ item.value }} name="boxes">
+                            {% endif %}
+                            {{ item.checklist_item }}
+                        </td>
+                        <td></td>
+                    </tr>
+                  {% endfor %}
+                    <hr>
               {% endfor %}
-              <br>
+                  </tbody>
+                </table>
             <input class="mt-4 btn btn-primary" type="submit" value = "submit">
           </form>
         </div>
     </div>
 {% endblock content %}
-
 

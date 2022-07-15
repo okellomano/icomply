@@ -1,25 +1,74 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages
-from django.views.generic import TemplateView, ListView
-from django.http import HttpResponse
 import os
 from django.conf import settings
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required
 
+from django.views.generic import TemplateView, ListView
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from .forms import ChecklistForm, DpaChecklistForm, AddChecklistForm
-from .models import Checklist, ChecklistsModel
+from django.shortcuts import get_object_or_404
+
+from .models import Checklist, UserChecklist, Category
 
 
 class HomePageView(TemplateView):
     template_name = 'home.html'
 
 
+class ResultsPageView(TemplateView):
+    template_name = 'result.html'
+
+
 class ChecklistPageView(LoginRequiredMixin, ListView):
     model = Checklist
     context_object_name = 'checklists'
-    template_name = 'checklist.html'
+    template_name = 'checklist_quiz.html'
     login_url = 'account_login'
+
+
+def checklist_view(request):
+    checklists = Checklist.objects.all()
+
+    # if request.user == get_user_model():
+    #     pass
+    # else:
+    #     pass
+
+    all_values = [score.value for score in checklists]
+    total = 0
+    for value in all_values:
+        total = total + value
+
+    if request.method == "POST":
+        score_list = request.POST.getlist('boxes')
+        total_score = sum([int(score) for score in score_list])
+
+        percent = round((total_score / total) * 100)
+
+        context = {
+            'total_score': total_score,
+            'percent': percent,
+            'total': total
+        }
+
+        # Uncheck every items
+        checklists.update(implemented=False)
+
+        # update the database
+        # Checklist.objects.filter(pk=int(item_id)).update()
+        return render(request, 'result.html', context)
+
+    context = {
+        # 'categories': Category.objects.filter(type='Governance'),
+        'categories': Category.objects.all(),
+        'checklists': checklists,
+    }
+    return render(request, 'checklist_quiz.html', context)
+
+
+def user_filled_checklists(request):
+    user_checklists = UserChecklist.objects.filter(user=get_user_model())
 
 
 def dpa_view(request):
@@ -38,55 +87,20 @@ def dpa_regulations_view(request):
     pdf.closed
 
 
+def icomply_checklist_view(request):
+    with open(os.path.join(settings.STATIC_ROOT, 'dpa/iComply - DPA [2019] checklist v1.0.pdf'), 'rb') as pdf:
+        response = HttpResponse(pdf.read(), content_type='application/pdf')
+        response['Content-Disposition'] = 'inline;filename=iComply - DPA [2019] checklist v1.0.pdf'
+        return response
+    pdf.closed
+
+
 class DpaPageView(TemplateView):
     template_name = 'dpa.html'
 
 
 class FaqPageView(TemplateView):
     template_name = 'faq.html'
-
-
-@login_required(login_url='account_login')
-def ChecklistView(request):
-    if request.method == 'POST':
-        form = DpaChecklistForm(request.POST)
-        # form = ChecklistForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('checklist_submitted')
-    else:
-        # form = ChecklistForm()
-        form = DpaChecklistForm()
-        context = {'form': form}
-    return render(request, 'checklist.html', context)
-
-
-def checklist_view(request):
-    if request.method == 'POST':
-        checklists = ChecklistsModel.objects.all()
-        score = 0
-        missed = 0
-        correct = 0
-        total = 0
-
-        for checklist in checklists:
-            total += 1
-            if checklist.score == request.POST.get(checklist.description):
-                score += 10
-                correct += 1
-            else:
-                missed += 1
-
-        percent = score/(total * 10) * 100
-        context = {
-            'score': score,
-            'percent': percent
-        }
-        return render(request, 'result.html', context)
-    else:
-        checklists = ChecklistsModel.objects.all()
-        context = {'checklists': checklists}
-        return render(request, 'checklist_quiz.html', context)
 
 
 class ChecklistSubmitView(TemplateView):

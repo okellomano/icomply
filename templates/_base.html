@@ -21,37 +21,32 @@
 <!--    Navigation bar-->
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
     <div class="container-fluid">
-      <a class="navbar-brand" href="{% url 'home' %}"><img class="rounded mx-auto d-block" src="{% static 'images/logo.png' %}" height="50" width="120"></a>
+      <a class="navbar-brand" href="{% url 'checklist:home' %}"><img class="rounded mx-auto d-block" src="{% static 'images/logo.png' %}" height="50" width="120"></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-<!--          <li class="nav-item">-->
-<!--            <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>-->
-<!--          </li>-->
+
           <li class="nav-item">
-            <a class="nav-link white" href="{% url 'checklist' %}">Checklist</a>
+            <a class="nav-link white" href="{% url 'checklist:checklist' %}">Checklist</a>
           </li>
-  <!--        <li class="nav-item dropdown">-->
-  <!--          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">-->
-  <!--            Actions-->
-  <!--          </a>-->
-  <!--          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">-->
-  <!--            <li><a class="dropdown-item" href="#">Action</a></li>-->
-  <!--            <li><a class="dropdown-item" href="#">Another action</a></li>-->
-  <!--            <li><hr class="dropdown-divider"></li>-->
-  <!--            <li><a class="dropdown-item" href="#">Something else here</a></li>-->
-  <!--          </ul>-->
-  <!--        </li>-->
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'dpa' %}">DPA</a>
+
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Resources
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="{% url 'checklist:dpa' %}">DPA</a></li>
+              <li><a class="dropdown-item" href="{% url 'checklist:dpa_regulations' %}">Regulations</a></li>
+              <li><a class="dropdown-item" href="{% url 'checklist:icomply' %}">iComply DPA Checklist</a></li>
+<!--              <li><hr class="dropdown-divider"></li>-->
+<!--              <li><a class="dropdown-item" href="#">Something else here</a></li>-->
+            </ul>
           </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'dpa_regulations' %}">Regulations</a>
-            </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'faq' %}">FAQ</a>
+            <a class="nav-link" href="{% url 'checklist:faq' %}">FAQ</a>
           </li>
         </ul>
         <form class="d-flex">

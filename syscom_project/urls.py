@@ -18,13 +18,12 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    # local apps
     path('', include('checklist.urls')),
+    path('visualization/', include('visualization.urls')),
 
     #  user management
-    # path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/', include('allauth.urls')),
-
-    # local app
-    # path('accounts/', include('users.urls')),
 
 ]
