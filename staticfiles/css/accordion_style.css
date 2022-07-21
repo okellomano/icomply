@@ -1,0 +1,120 @@
+h1,h2,h3,h4,h5,h6,p,ul,ol{margin:0; padding:0;}
+			 .accordion{
+			     padding:2em;
+			 }
+ .form_input_check, .form_input_radio {
+     position:absolute;
+     left:-9000000000px;
+     width:1px;
+     height:1px;
+     display:none;
+ }
+ .form_input_radio + label,
+ .form_input_check + label{
+     cursor:pointer;
+     font-size:17px!important;
+     color:#000;
+     display:flex;
+     align-items:center;
+     font-weight:400;
+     width:100%;
+ }
+ .form_input_radio + label:before,
+ .form_input_check + label:before{
+     content: '\00a0';
+     font-family: "Font Awesome 5 Free";
+     font-weight:900;
+     font-size:15px;
+     color:blue;
+     padding:1px;
+     box-sizing:border-box;
+     width:20px;
+     height:20px;
+     display:flex;
+     justify-content:center;
+     align-items:center;
+     border:2px solid blue;
+     background-color:#fff;
+     margin-right:.5em;
+     cursor:pointer;
+ }
+ .form_input_radio2x + label:before,
+ .form_input_check2x + label:before{
+     width:25px;
+     height:25px;
+ }
+ .form_input_radio + label:before{
+     border-radius:50%;
+ }
+ .form_input_radio:checked + label:before,
+ .form_input_check:checked + label:before{
+     content: "\f00c";
+ }
+ .form_input_radio:hover + label:before{
+
+ }
+ .form_input_radio:disabled + label:before,
+ .form_input_check:disabled + label:before{
+     border:2px solid #e0e0e0;
+     background-color:#f8f8f8;
+     color:#000!important;
+ }
+ .accordion_header{
+     display:flex;
+ }
+ .accordion_header > span{
+     font-size:23px;
+     font-weight:600;
+     display:flex;
+     align-items:center;
+     height:50px;
+ }
+ .accordion_header > span:first-child{
+     color:#d0d0d0;
+     margin-right:10px;
+     border-bottom:3px solid blue;
+ }
+ .accordion_body{
+     display:flex;
+     border:1px solid #e0e0e0;
+     margin-top:1em;
+ }
+ .accordion_body > div{
+     flex:1;
+ }
+ .accordion_body_left{
+     display:grid;
+     grid-template-rows:1fr 1fr 1fr;
+     grid-template-columns:1fr;
+ }
+ .accordion_body_left > div{
+     padding:1em;
+     display:flex;
+     align-items:center;
+ }
+ .accordion_body_left > div label > span:first-child{
+     flex:1;
+ }
+ .accordion_body_left > div label > span:last-child{
+     margin-left:1em;
+     color:blue;
+     font-weight:600;
+     font-size:20px;
+ }
+ .accordion_body_left > div:not(:last-child){
+     border-bottom:1px solid #e0e0e0;
+ }
+ .accordion_body_left > div:not(.focused){
+     border-right:1px solid #e0e0e0;
+ }
+ .focused, .accordion_body_right{
+     background-color:#f0f0f0;
+ }
+ .accordion_body_right{
+     padding:2em;
+     font-size:15px;
+     line-height:1.5em;
+ }
+ .accordion_body_right > div:not(:first-child){
+     display:none;
+ }

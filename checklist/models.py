@@ -6,22 +6,26 @@ from django.urls import reverse
 class Category(models.Model):
     type = models.CharField(max_length=100)
 
+    class Meta:
+        verbose_name_plural = 'Categories'
+
     def __str__(self):
         return self.type
 
 
 class Checklist(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='categories')
-    checklist_item = models.CharField(max_length=150)
+    checklist_item = models.CharField(max_length=300)
+    brief_description = models.TextField(max_length=300, default='Required for DPA compliance')
     value = models.IntegerField()
     implemented = models.BooleanField('Implemented', default=False)
 
     def __str__(self):
         return self.checklist_item
 
-    # on submit, redirect to the results page
-    def get_absolute_url(self):
-        return reverse('checklist:results')
+    @property
+    def percentage_score(self):
+        pass
 
 
 class UserChecklist(models.Model):
@@ -29,4 +33,17 @@ class UserChecklist(models.Model):
     user_checklist = models.ForeignKey(Checklist, on_delete=models.CASCADE, related_name='user_checklist')
     user_score = models.ForeignKey(Checklist, on_delete=models.CASCADE, related_name='user_score')
     date_filled = models.DateTimeField(auto_now_add=True)
+    percentage_score = models.IntegerField(default=0)
+
+    class Meta:
+        verbose_name_plural = 'User Checklists'
+
+
+class PoliciesDocuments(models.Model):
+    organization = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    policy_name = models.CharField(max_length=50)
+    document = models.FileField(upload_to='policies/')
+
+    class Meta:
+        verbose_name_plural = 'Policies Documents'
 

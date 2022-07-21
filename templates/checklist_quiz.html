@@ -4,39 +4,167 @@
 [% load i18n %}
 {% block title %}checklist{% endblock title %}
 {% block content %}
-    <div>
-        <div class="container bg-cyan"><h3 class="m-2 mt-4">The Data Protection Act, 2019 Checklist for Data Processors</h3></div>
-        <div class="container overflow-hidden">
-          <form method='post' class="mt-4">
-            {% csrf_token %}
-              {% for category in categories %}
-              <table class="table table-borderless table-hover mb-4">
-                  <thead>
-                    <tr>
-                        <th scope="col"><h4>{{ category.type }}</h4></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  {% for item in category.categories.all %}
-                    <tr>
-                        <td>
-                            {% if item.implemented %}
-                                <input class="form-check-input" type="checkbox"  checked="checked" value={{ item.value }} name="boxes">
-                            {% else %}
-                                <input class="form-check-input" type="checkbox"  value={{ item.value }} name="boxes">
-                            {% endif %}
-                            {{ item.checklist_item }}
-                        </td>
-                        <td></td>
-                    </tr>
-                  {% endfor %}
-                    <hr>
-              {% endfor %}
-                  </tbody>
-                </table>
-            <input class="mt-4 btn btn-primary" type="submit" value = "submit">
-          </form>
+
+    <section class="page-title bg-2">
+      <div class="container mb-4">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="block">
+              <h1>DPA 2019 Checklist for Data Processors</h1>
+              <p>DPA checklist can help your organization, protect your customers’ data, and gauge compliance to the DPA by providing a clear guide to compliance. </p>
+            </div>
+          </div>
         </div>
+      </div>
+    </section>
+
+<div class="container">
+    <div class="mt-4 mb-4"></div>
+    <div class="container pt-4">
+        <h5 class="m-4 text-center text-secondary"><em>The DPA checklist is divided into different categories. Read the items in each category and check the box if your organization has complied to the item, else, leave the box unchecked.</em></h5>
     </div>
+
+
+<!--------------------- static accordion ----------------------------->
+
+<!--     <div class='accordion'>-->
+<!--         <div class='accordion_header'>-->
+<!--             <span><i class='fa-solid fa-scale-balanced'></i></span>-->
+<!--             <span>Lawful basis and transparency</span>-->
+<!--         </div>-->
+<!--         <div class='accordion_body'>-->
+<!--             <div class='accordion_body_left'>-->
+<!--                 <div class='focused'>-->
+<!--                     <input id='checkbox-1' type='checkbox' class='form_input_check form_input_check2x'>-->
+<!--                     <label for='checkbox-1'><span>Conduct an information audit to determine what information you process and who has access to it.</span> <span><i class='fa-solid fa-chevron-right'></i></span></label>-->
+<!--                 </div>-->
+<!--                 <div>-->
+<!--                     <input id='checkbox-2' type='checkbox' class='form_input_check form_input_check2x'>-->
+<!--                     <label for='checkbox-2'><span>Have a legal justification for your data processing activities.</span> <span><i class='fa-solid fa-chevron-right'></i></span></label>-->
+<!--                 </div>-->
+<!--                 <div>-->
+<!--                     <input id='checkbox-3' type='checkbox' class='form_input_check form_input_check2x'>-->
+<!--                     <label for='checkbox-3'><span>Provide clear information about your data processing and legal justification in your privacy policy.</span> <span><i class='fa-solid fa-chevron-right'></i></span></label>-->
+<!--                 </div>-->
+<!--             </div>-->
+<!--             <div class='accordion_body_right'>-->
+<!--                 <div>-->
+<!--                      Organizations that have at least 250 employees or conduct higher-risk data processing are required to keep an up-to-date and detailed list of their processing activities and be prepared to show that list to regulators upon request. The best way to demonstrate GDPR compliance is using a data protection impact assessment Organizations with fewer than 250 employees should also conduct an assessment because it will make complying with the GDPR's other requirements easier. In your list, you should include: the purposes of the processing, what kind of data you process, who has access to it in your organization, any third parties (and where they are located) that have access, what you're doing to protect the data (e.g. encryption), and when you plan to erase it (if possible).-->
+<!--                 </div>-->
+<!--                 <div>-->
+<!--                     Processing of data is illegal under the GDPR unless you can justify it according to one of six conditions listed in Article 6. There are other provisions related to children and special categories of personal data in Articles 7-11. Review these provisions, choose a lawful basis for processing, and document your rationale. Note that if you choose "consent" as your lawful basis, there are extra obligations, including giving data subjects the ongoing opportunity to revoke consent. If "legitimate interests" is your lawful basis, you must be able to demonstrate you have conducted a privacy impact assessment.-->
+<!--                 </div>-->
+<!--                 <div>-->
+<!--                     You need to tell people that you're collecting their data and why (Article 12). You should explain how the data is processed, who has access to it, and how you're keeping it safe. This information should be included in your privacy policy and provided to data subjects at the time you collect their data. It must be presented "in a concise, transparent, intelligible and easily accessible form, using clear and plain language, in particular for any information addressed specifically to a child."-->
+<!--                 </div>-->
+<!--             </div>-->
+<!--         </div>-->
+<!--     </div>-->
+
+
+
+
+    <!-------------------------- end static accordion ---------------------------->
+
+    <!----------------------------------------start dynamic accordion ------------------------------------->
+    <div>
+        <form method="post">
+            {% csrf_token %}
+            {% for category in categories %}
+                <div class="accordion">
+                    <div class="accordion_header">
+                         <span><i class='fa-solid fa-scale-balanced'></i></span>
+                         <span>{{ category.type }}</span>
+                    </div>
+                    <div class="accordion_body">
+
+                        <div class="accordion_body_left">
+                            {% for item in category.categories.all %}
+                            <div class="focused">
+                                <p>{{ item.id }}</p>
+                                <input id='{{ item.id }}' type='checkbox' value="{{ item.id }}" name="boxes" class='form_input_check form_input_check2x'>
+                                <label for='{{ item.id }}'><span>{{ item.checklist_item }}</span> <span><i class='fa-solid fa-chevron-right'></i></span></label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <div class="accordion_body_right">
+                            {% for item in category.categories.all %}
+                             <div>{{ item.brief_description }}</div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+            <div class="pb-4">
+                <input class="mt-4 btn btn-primary" type="submit" value="submit">
+            </div>
+        </form>
+    </div>
+
+    <!------------------------------------------- end dynamic accordion ------------------------------------------>
+
+
+<!--    <div class="">-->
+<!--        <div class="container overflow-hidden">-->
+<!--          <form method='post' class="mt-4">-->
+<!--            {% csrf_token %}-->
+<!--              {% for category in categories %}-->
+<!--              <table class="table table-borderless mb-4">-->
+<!--                  <thead>-->
+<!--                    <tr>-->
+<!--                        <th scope="col"><h4>{{ category.type }}</h4></th>-->
+<!--                    </tr>-->
+<!--                  </thead>-->
+<!--                  <tbody>-->
+<!--                  {% for item in category.categories.all %}-->
+<!--                    <tr>-->
+<!--                        <td>-->
+<!--                            {% if item.implemented %}-->
+<!--                                <input class="form-check-input mr-2" type="checkbox"  checked="checked" value={{ item.value }} name="boxes">-->
+<!--                            {% else %}-->
+<!--                                <input class="form-check-input mr-2" type="checkbox"  value={{ item.value }} name="boxes">-->
+<!--                            {% endif %}-->
+<!--                            {{ item.checklist_item }}-->
+<!--                        </td>-->
+<!--                        <td></td>-->
+<!--                    </tr>-->
+<!--                  {% endfor %}-->
+<!--                    <hr>-->
+<!--              {% endfor %}-->
+<!--                  </tbody>-->
+<!--                </table>-->
+<!--              <div class="pb-4">-->
+<!--                   <input class="mt-4 btn btn-primary" type="submit" value="submit">-->
+<!--              </div>-->
+<!--          </form>-->
+<!--            <br>-->
+<!--        </div>-->
+<!--    </div>-->
+
+
+</div>
+
+
+
+<script src='https://code.jquery.com/jquery-3.6.0.min.js' integrity='sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=' crossorigin='anonymous'></script>
+<script src='https://kit.fontawesome.com/f0c48958d0.js' crossorigin='anonymous'></script>
+<script>
+ $("body").on("click", ".accordion_body_left > div", function(){
+     let divOneIndex = $(this).index();
+     $(".focused").removeClass("focused");
+     $(this).addClass("focused");
+     $(".accordion_body_right > div").each(function(){
+         let divTwoIndex = $(this).index();
+         if(divOneIndex === divTwoIndex){
+             $(this).show();
+         }else{
+             $(this).hide();
+         }
+     });
+ });
+</script>
+
+
 {% endblock content %}
 

@@ -5,85 +5,115 @@
 <html lang="en">
   <head>
     <!-- Required meta tags -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Creative Agency Bootstrap Template">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="author" content="Themefisher">
+    <meta name="generator" content="Themefisher Airspace Template v1.0">
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <!-- bootstrap.min css -->
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap/bootstrap.min.css' %}">
+    <!-- Ionic Icon Css -->
+    <link rel="stylesheet" href="{% static 'plugins/Ionicons/css/ionicons.min.css' %}">
+    <!-- animate.css -->
+    <link rel="stylesheet" href="{% static 'plugins/animate-css/animate.css' %}">
+    <!-- Magnify Popup -->
+    <link rel="stylesheet" href="{% static 'plugins/magnific-popup/magnific-popup.css' %}">
+    <!-- Slick CSS -->
+    <link rel="stylesheet" href="{% static 'plugins/slick/slick.css' %}">
+
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <!-- accordion styles -->
+    <link rel="stylesheet" href="{% static 'css/accordion_style.css' %}">
+
+
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{% static 'css/dpa-styles.css' %}">
-    <script src="{% static 'js/app.js' %}"></script>
-    <script src="{% static 'js/jquery.min.js' %}"></script>
 
     <title>{% block title %}DPA{% endblock title %}</title>
   </head>
-  <body>
+  <body id="body">
+
+
   {% block main_page %}
-<!--    Navigation bar-->
-    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="{% url 'checklist:home' %}"><img class="rounded mx-auto d-block" src="{% static 'images/logo.png' %}" height="50" width="120"></a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-          <li class="nav-item">
-            <a class="nav-link white" href="{% url 'checklist:checklist' %}">Checklist</a>
-          </li>
+  <header class="navigation">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12">
+				<nav class="navbar navbar-expand-lg p-0 fixed-top navbar-light bg-light"><!-- style="background-color: #e3f2fd;"-->
+					<a class="navbar-brand" href="{% url 'checklist:home' %}">
+						<img src="{% static 'images/logo.png' %}" height="80" width="200" alt="Logo">
+					</a>
 
+					<button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="ion-android-menu"></span>
+					</button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                        <a class="nav-link white" href="{% url 'checklist:home' %}">Home</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link white" href="{% url 'checklist:checklist' %}">Checklist</a>
+                      </li>
+                      <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Resources
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <li><a class="dropdown-item" href="{% url 'checklist:dpa' %}">DPA</a></li>
+                          <li><a class="dropdown-item" href="{% url 'checklist:dpa_regulations' %}">Regulations</a></li>
+                          <li><a class="dropdown-item" href="{% url 'checklist:dpia' %}">DPIA Template</a></li>
+                          <li><a class="dropdown-item" href="{% url 'checklist:icomply' %}">iComply DPA Checklist</a></li>
+                        </ul>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="{% url 'checklist:faq' %}">FAQ</a>
+                      </li>
+                    </ul>
+                    <form class="d-flex">
+                      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                      <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
 
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Resources
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="{% url 'checklist:dpa' %}">DPA</a></li>
-              <li><a class="dropdown-item" href="{% url 'checklist:dpa_regulations' %}">Regulations</a></li>
-              <li><a class="dropdown-item" href="{% url 'checklist:icomply' %}">iComply DPA Checklist</a></li>
-<!--              <li><hr class="dropdown-divider"></li>-->
-<!--              <li><a class="dropdown-item" href="#">Something else here</a></li>-->
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'checklist:faq' %}">FAQ</a>
-          </li>
-        </ul>
-        <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    {% if user.is_authenticated %}
 
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        {% if user.is_authenticated %}
-
-            <li class="nav-item">
-              <a class="nav-link" href="#">{{ user.username.title }}</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'account_logout' %}">Logout</a>
-            </li>
-        {% else %}
-          <li class="nav-item">
-              <a class="nav-link" href="{% url 'account_login' %}">Login</a>
-            </li>
-          <li class="nav-item">
-              <a class="nav-link" href="{% url 'account_signup' %}">Sign Up</a>
-          </li>
-        {% endif %}
-        </ul>
-      </div>
-    </div>
-    </nav>
-
+                        <li class="nav-item">
+                          <a class="nav-link" href="#">{{ user.username.title }}</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="{% url 'account_logout' %}">Logout</a>
+                        </li>
+                    {% else %}
+                      <li class="nav-item">
+                          <a class="nav-link" href="{% url 'account_login' %}">Login</a>
+                        </li>
+                      <li class="nav-item">
+                          <a class="nav-link" href="{% url 'account_signup' %}">Sign Up</a>
+                      </li>
+                    {% endif %}
+                    </ul>
+                  </div>
+				</nav>
+			</div>
+		</div>
+	</div>
+  </header>
 <!-- nav bar ends here   -->
-    <div class="mt-4 center">
-        <img class="rounded mx-auto d-block rounded-circle" src="{% static 'images/logo.png' %}" height="180" width="200">
-    </div>
 
-    <div class="">
-        {% block content %} {% endblock content %}
-    </div>
+
+    <div class="">{% block content %} {% endblock content %}</div>
+    <div class="">{% block footer %}{% endblock footer %}</div>
 
     <!-- Optional JavaScript; choose one of the two! -->
 
@@ -91,13 +121,9 @@
     {% block javascripts %}
 
     {% endblock javascripts %}
+    <script src="{% static 'js/app.js' %}"></script>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-
-    <!-- Option 2: Separate Popper and Bootstrap JS -->
-    <!--
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
-    -->
   </body>
 </html>
 
