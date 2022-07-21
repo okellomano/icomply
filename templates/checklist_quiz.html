@@ -81,7 +81,6 @@
                         <div class="accordion_body_left">
                             {% for item in category.categories.all %}
                             <div class="focused">
-                                <p>{{ item.id }}</p>
                                 <input id='{{ item.id }}' type='checkbox' value="{{ item.id }}" name="boxes" class='form_input_check form_input_check2x'>
                                 <label for='{{ item.id }}'><span>{{ item.checklist_item }}</span> <span><i class='fa-solid fa-chevron-right'></i></span></label>
                             </div>

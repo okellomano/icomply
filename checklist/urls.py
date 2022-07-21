@@ -18,5 +18,6 @@ urlpatterns = [
     path('icomply/', views.icomply_checklist_view, name='icomply'),
     path('dpia/', views.dpia_view, name='dpia'),
     path('checklist_submitted/', views.ChecklistSubmitView.as_view(), name='checklist_submitted'),
+    path('user-results/', views.user_results_view, name='user-results')
 
 ]

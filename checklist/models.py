@@ -47,3 +47,19 @@ class PoliciesDocuments(models.Model):
     class Meta:
         verbose_name_plural = 'Policies Documents'
 
+
+class UserChecklistEntries(models.Model):
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    checklist = models.ForeignKey(Checklist, on_delete=models.CASCADE, null=True, blank=True)
+    percent_s = models.PositiveIntegerField(default=0)
+    total_values = models.PositiveIntegerField(default=0)
+    user_score = models.PositiveIntegerField(default=0)
+    tier = models.CharField(max_length=20, default='Non-compliant')
+    date_filled = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name_plural = 'User Checklist Entries'
+
+    def __str__(self):
+        return f'{self.user}'.title()
+
