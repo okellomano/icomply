@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'ckeditor',
-    'multiselectfield',
+    'formtools',
 ]
 
 MIDDLEWARE = [
