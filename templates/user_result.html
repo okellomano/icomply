@@ -4,34 +4,33 @@
 [% load i18n %}
 {% block title %}checklist{% endblock title %}
 {% block content %}
-    <div>
-            <div class="container bg-cyan"><br><br><br>
-                <h4>Your Compliance Status as at {{ date_filled }}</h4>
-            </div>
-            <div class="container border-top overflow-hidden pt-4">
-            <h5 class="">Compliance Score for <strong>{{ entry.user|title }}:</strong> {{ total_score }} out of {{ total }}</h5>
-            <h4>Percentage: {{ percent }} %</h4>
-            <h4>Compliance Tier: {{ tier }}</h4>
-
-
-                {% if percent < 50 %}
-                    <p>You need to upgrade your level to avoid penalties.</p>
-                {% elif percent > 60 %}
-                    <p>You are doing better, but you need to do more.</p>
-                {% endif %}
-            </div>
-            <div class="container pt-4">
-                <h4>Checklist Details</h4>
-                <div>{{ target|safe}}</div>
-            </div>
-
-            <!-- <div class="container p-4 col-md-8">
-                <br><br><br><br>
-                <h5>Looks like you have not filled any checklist!</h5>
-                <p>Your checklist status apear here</p>
-            </div> -->
-
-
+<div>
+    <div class="container bg-cyan"><br><br><br>
+        <h4>Your Compliance Status as at {{ date_filled }}</h4>
     </div>
+    <div class="container border-top overflow-hidden pt-4">
+        {% for entry in entries %}
+            {{ entry }}
+            {{ entry.checklist_item }}
+        <h4>Percentage: {{ entry.percent_s }} %</h4>
+        {% endfor %}
+<!--    <h5 class="">Compliance Score for <strong>{{ entry.user|title }}:</strong> {{ total_score }} out of {{ total }}</h5>-->
+
+    <h4>Compliance Tier: {{ tier }}</h4>
+        {% if percent < 50 %}
+            <p>You need to upgrade your level to avoid penalties.</p>
+        {% elif percent > 60 %}
+            <p>You are doing better, but you need to do more.</p>
+        {% endif %}
+    </div>
+    <div class="container pt-4">
+        <h4>Checklist Details</h4>
+        <div>{{ target|safe}}</div>
+    </div>
+
+    {% for result in results %}
+        <h5><a href="{% url 'checklist:result-details' result.pk %}">{{ result.user }} checklist for {{ result.date_filled }}</a> </h5>
+    {% endfor %}
+</div>
 
 {% endblock content %}

@@ -12,6 +12,7 @@ django-admin-volt = "*"
 django-allauth = "*"
 django-ckeditor = "==6.4.2"
 django-multiselectfield = "*"
+reportlab = "*"
 
 [dev-packages]
 

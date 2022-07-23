@@ -1,6 +1,9 @@
+import io
 from ast import Pass
 import os
 from datetime import datetime
+
+from reportlab.pdfgen import canvas
 
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -8,10 +11,9 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 
 
-from django.views.generic import TemplateView, ListView
-from django.http import HttpResponse
+from django.views.generic import TemplateView, ListView, DetailView
+from django.http import HttpResponse, FileResponse
 from django.shortcuts import render, redirect
-from django.shortcuts import get_object_or_404
 
 from .models import Checklist, Category, UserChecklistEntries
 from .operations import calculate_scores, get_compliance_tier, get_user_scores_for_specific_checklist, save_user_entries
@@ -60,49 +62,6 @@ def checklist_view(request):
         'categories': Category.objects.all()
     }
     return render(request, 'checklist_quiz.html', context)
-
-
-
-
-    # checklists = Checklist.objects.all()
-    #
-    # all_values = [score.value for score in checklists]
-    # total = 0
-    # for value in all_values:
-    #     total = total + value
-    # user = request.user
-    # score_list = request.POST.getlist('boxes')
-    # total_score = sum([int(score) for score in score_list])
-    #
-    # percent = round((total_score / total) * 100)
-    #
-    # if percent > 90:
-    #     tier_level = 'Tier 1'
-    # elif percent > 80:
-    #     tier_level = 'Tier 2'
-    # elif percent > 70:
-    #     tier_level = 'Tier 3'
-    # elif percent > 50:
-    #     tier_level = 'Tier 4'
-    # else:
-    #     tier_level = 'Non Compliant'
-    #
-    # context = {
-    #     'total_score': total_score,
-    #     'percent': percent,
-    #     'total': total,
-    #     'user': user,
-    #     'tier_level': tier_level
-    # }
-    #
-    # if request.method == "POST":
-    #     return render(request, 'result.html', context)
-    #
-    # context = {
-    #     'categories': Category.objects.all(),
-    #     # 'form': form,
-    # }
-    # return render(request, 'checklist_quiz.html', context)
 
 
 def user_scores_view(request):
@@ -161,12 +120,33 @@ class ChecklistSubmitView(TemplateView):
 def user_results_view(request):
     entries = UserChecklistEntries.objects.filter(user=request.user)
 
-    for entry in entries:
-        context = {
-            'user': entry.user,
-            'percent': entry.percent_s,
-            'tier': entry.tier,
-            'date_filled': entry.date_filled
-        }
-    return render(request, 'user_result.html', context)
+    # for entry in entries:
+    #     context = {
+    #         'user': entry.user,
+    #         'percent': entry.percent_s,
+    #         'tier': entry.tier,
+    #         'date_filled': entry.date_filled
+    #     }
+    return render(request, 'user_result.html', {'entries': entries})
+
+
+class ResultsListView(ListView):
+    model = UserChecklistEntries
+    template_name = 'user_result.html'
+    context_object_name = 'results'
+
+
+class ResultDetailView(DetailView):
+    model = UserChecklistEntries
+    template_name = 'user_result_detail.html'
+    context_object_name = 'result'
+
+
+def generate_report(request, id):
+    buffer = io.BytesIO()
+    x = canvas.Canvas(buffer)
+    x.drawString(100, 100, 'Testing pdf generator')
+    x.showPage()
+    buffer.seek(0)
+    return FileResponse(buffer, as_attachment=True, filename='pdf_test.pdf')
 

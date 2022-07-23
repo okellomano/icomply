@@ -1,0 +1,14 @@
+{% extends '_base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+[% load i18n %}
+{% block title %}checklist{% endblock title %}
+{% block content %}
+<div class="container">
+    <br><br><br><br><br><br><br>
+    <h4><a href="">{{ result.checklist_item }}</a> </h4>
+    <p>Organization: {{ result.user }}</p>
+    <p>Compliance Score: {{ result.percent_s }}% ({{ result.tier }})</p>
+</div>
+
+{% endblock content %}
