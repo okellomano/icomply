@@ -1,15 +1,15 @@
 from django import forms
-from .models import Checklist
+from .models import PoliciesDocuments
+
+from multiupload.fields import MultiFileField
 
 
-class PoliciesUploadForm(forms.Form):
-    file_field = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
-    name = forms.CharField(max_length=50)
+class UploadForm(forms.Form):
+    policies = MultiFileField(min_num=1, max_num=8, max_file_size=1024*1024*5)
 
 
-# class UserChecklistForm(forms.ModelForm):
-#     class Meta:
-#         model = Checklist
-#         fields = ['category', 'checklist_item', 'implemented']
-
+class PoliciesUploadForm(forms.ModelForm):
+    class Meta:
+        model = PoliciesDocuments
+        fields = ('privacy', 'data_protection', 'data_retention', 'data_security', 'system_use_procedures', 'data_sharing_agreements', 'data_processor_contracts')
 

@@ -12,10 +12,12 @@ from django.contrib.auth.decorators import login_required
 
 
 from django.views.generic import TemplateView, ListView, DetailView
-from django.http import HttpResponse, FileResponse
+from django.views.generic.edit import FormView
+from django.http import HttpResponse, FileResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 
-from .models import Checklist, Category, UserChecklistEntries
+from .models import Checklist, Category, UserChecklistEntries, PoliciesDocuments
+from .forms import UploadForm, PoliciesUploadForm
 from .operations import calculate_scores, get_compliance_tier, get_user_scores_for_specific_checklist, save_user_entries
 
 
@@ -57,7 +59,8 @@ def checklist_view(request):
             'user': user,
             'tier_level': tier_level
         }
-        return render(request, 'result.html', context)
+        # return render(request, 'result.html', context)
+        return redirect('/uploads/')
     context = {
         'categories': Category.objects.all()
     }
@@ -120,14 +123,14 @@ class ChecklistSubmitView(TemplateView):
 def user_results_view(request):
     entries = UserChecklistEntries.objects.filter(user=request.user)
 
-    # for entry in entries:
-    #     context = {
-    #         'user': entry.user,
-    #         'percent': entry.percent_s,
-    #         'tier': entry.tier,
-    #         'date_filled': entry.date_filled
-    #     }
-    return render(request, 'user_result.html', {'entries': entries})
+    for entry in entries:
+        context = {
+            'user': entry.user,
+            'percent': entry.percent_s,
+            'tier': entry.tier,
+            'date_filled': entry.date_filled
+        }
+    return render(request, 'result.html', {'context': context})
 
 
 class ResultsListView(ListView):
@@ -140,6 +143,33 @@ class ResultDetailView(DetailView):
     model = UserChecklistEntries
     template_name = 'user_result_detail.html'
     context_object_name = 'result'
+
+
+class UploadView(FormView):
+    template_name = 'policies_upload.html'
+    form_class = UploadForm
+    success_url = '/checklist_submitted/'
+
+    def form_valid(self, form):
+        for each in form.cleaned_data['policies']:
+            PoliciesDocuments.objects.create(document=each)
+        return super(UploadView, self).form_valid(form)
+
+
+def upload_documents(request):
+    if request.method == 'POST':
+        form = PoliciesUploadForm(request.POST, request.FILES)
+        # documents = request.FILES.getlist('document')
+        if form.is_valid():
+            policiesdocuments = form.save(commit=False)
+            policiesdocuments.organization = request.user
+            policiesdocuments.save()
+
+            return HttpResponseRedirect('/checklist_submitted/')
+    else:
+        form = PoliciesUploadForm()
+
+    return render(request, 'policies_upload.html', {'form': form})
 
 
 def generate_report(request, id):

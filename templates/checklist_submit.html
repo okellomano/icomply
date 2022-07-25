@@ -2,7 +2,7 @@
 {% load static %}
 {% load crispy_forms_tags %}
 
-{% block title %}Logout{% endblock title %}
+{% block title %}success submit{% endblock title %}
 
 {% block main_page %}
     <div class="row justify-content-center mt-4">
@@ -11,6 +11,7 @@
             <h5 class="text-primary">Checklist submitted successfully!</h5>
             <p class="mb-4">Thank you for submitting the checklist, you shall receive your compliance status as soon as the verification process is done!</p>
             <a href="{% url 'checklist:home' %}" class="btn btn-primary">Return to homepage</a>
+<!--            or <a class="btn btn-secondary" href="{% url 'checklist:user-results' %}">View Preliminary Score</a>-->
         </div>
     </div>
 {% endblock main_page %}

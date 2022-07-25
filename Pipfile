@@ -13,6 +13,7 @@ django-allauth = "*"
 django-ckeditor = "==6.4.2"
 django-multiselectfield = "*"
 reportlab = "*"
+django-multiupload = "*"
 
 [dev-packages]
 

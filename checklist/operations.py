@@ -1,6 +1,8 @@
 from django.db.models import Sum
 
+from django.http import HttpResponseRedirect
 from .models import Checklist, UserChecklistEntries
+from .forms import PoliciesUploadForm
 
 
 def calculate_scores(score_entries=None):
@@ -68,3 +70,5 @@ def get_user_scores_for_specific_checklist(user=None, checklist_id=None):
 
     scores = calculate_scores(score_entries=scores_entries)
     return scores
+
+

@@ -22,5 +22,6 @@ urlpatterns = [
 
     # path('user-results/', views.ResultsListView.as_view(), name='user-results'),
     path('<int:pk>', views.ResultDetailView.as_view(), name='result-details'),
+    path('uploads/', views.upload_documents, name='policies-upload'),
 
 ]

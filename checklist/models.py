@@ -1,6 +1,12 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
 from django.urls import reverse
+
+
+def validate_file_extension(value):
+    if not value.name.endswith('.pdf'):
+        raise ValidationError(u'Please upload PDF documents only.')
 
 
 class Category(models.Model):
@@ -42,7 +48,13 @@ class UserChecklist(models.Model):
 class PoliciesDocuments(models.Model):
     organization = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     policy_name = models.CharField(max_length=50)
-    document = models.FileField(upload_to='policies/')
+    privacy = models.FileField(upload_to='policies/', null=True, blank=True, validators=[validate_file_extension])
+    data_protection = models.FileField(upload_to='policies/', null=True, blank=True, validators=[validate_file_extension])
+    data_retention = models.FileField(upload_to='policies/', null=True, blank=True, validators=[validate_file_extension])
+    data_security = models.FileField(upload_to='policies/', null=True, blank=True, validators=[validate_file_extension])
+    system_use_procedures = models.FileField(upload_to='policies/', null=True, blank=True, validators=[validate_file_extension])
+    data_sharing_agreements = models.FileField(upload_to='policies/', null=True, blank=True, validators=[validate_file_extension])
+    data_processor_contracts = models.FileField(upload_to='policies/', null=True, blank=True, validators=[validate_file_extension])
 
     class Meta:
         verbose_name_plural = 'Policies Documents'
