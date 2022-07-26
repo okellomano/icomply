@@ -1,14 +1,14 @@
 import io
-from ast import Pass
 import os
-from datetime import datetime
 
 from reportlab.pdfgen import canvas
 
 from django.conf import settings
+from django.core.exceptions import MultipleObjectsReturned
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
 
 
 from django.views.generic import TemplateView, ListView, DetailView
@@ -120,17 +120,14 @@ class ChecklistSubmitView(TemplateView):
 
 
 # user score view
-def user_results_view(request):
-    entries = UserChecklistEntries.objects.filter(user=request.user)
+def user_results_view(request, entries=None):
+    # entries = UserChecklistEntries.objects.filter(user=request.user)[0]
+    try:
+        entries = get_object_or_404(UserChecklistEntries.objects.filter(user=request.user))
+    except MultipleObjectsReturned:
+        entries = UserChecklistEntries.objects.filter(user=request.user).first()
 
-    for entry in entries:
-        context = {
-            'user': entry.user,
-            'percent': entry.percent_s,
-            'tier': entry.tier,
-            'date_filled': entry.date_filled
-        }
-    return render(request, 'result.html', {'context': context})
+    return render(request, 'result.html', {'entries': entries})
 
 
 class ResultsListView(ListView):

@@ -4,73 +4,77 @@
 [% load i18n %}
 {% block title %}checklist{% endblock title %}
 {% block content %}
-    <div>
-        <div class="container bg-cyan"><br><br><br>
-<!--            <h3 class="m-2 mt-4">Thank you for filling the checklist.</h3>-->
-
-        </div>
+<div>
     <div class="container">
         <div class="text-info mt-4 mb-4"><h4>Your Compliance Status</h4></div>
         <div class="shadow row">
-            <div class="text-center col-md-4 pt-4 m-4 pr-4">
-                <strong><h4 class="center border-bottom border-primary">{{ user| title }}</h4> </strong>
-                <div class="pt-4 mt-4"><h5>Score: {{ total_score }} out of {{ total }}</h5></div>
-                <div class="pt-4 mt-4"><h5>Percentage: {{ percent }} %</h5></div>
-                <div class="mt-4"><strong><h3>Compliance Level: {{ tier_level }}</h3></strong></div>
-            </div>
-            <div class="col-md-7 p-4 m-4 border-left border-primary">
-                <h6>Comments</h6>
-                <div>
-                    {% if percent > 90 %}
-                        <h5 class="text-primary mt-4">Congratulations for complying to most of the Data Protection Act regulations.</h5>
-                            <p><i class="fa-solid fa-horizontal-rule"></i> Data protection and privacy compliance will provide multiple benefits to your organizations.</p>
-                            <p><i class="fa-solid fa-horizontal-rule"></i> It not only helps your organizations prevent identity thefts but also adds to better compliance and functions. </p>
-                            <p><i class="fa-solid fa-horizontal-rule"></i> Besides, it also adds to revenue, resulting in overall growth.</p>
-                    {% elif percent > 80 %}
-                        <h5 class="text-primary mt-4">Well done for managing to comply to a number of regulations in the DPA of 2019.</h5>
-                            <p><i class="fa-solid fa-horizontal-rule"></i> Data privacy regulations such as Data Protection Act of regulations of 2021, address key data governance and data privacy issues that safeguard user data. </p>
-                            <p><i class="fa-solid fa-horizontal-rule"></i> Hence achieving your organization's obligations to comply with the regulations.</p>
-                            <p><i class="fa-solid fa-horizontal-rule"></i> The regulations legally protect data subjects from compromise of their personally identifiable information.</p>
-                    {% elif percent > 70 %}
-                        <h5 class="text-primary mt-4">Nice attempt for compliance to the data privacy and protection regulations.</h5>
-                            <p><i class="fa-solid fa-horizontal-rule"></i> However, your organization need to improve your compliance levels. </p>
-                            <p><i class="fa-solid fa-horizontal-rule"></i> This will cushion it against data breaches and other non-compliance penalties that might be arise</p>
-                            <p><i class="fa-solid fa-horizontal-rule"></i> Data privacy laws and regulations spell out what data protection is required, what framework should be accepted, and what penalties to avoid according.</p>
-                    {% elif percent > 60 %}
-
-                        <h5 class="text-primary mt-4">Good attempt for compliance to the data privacy and protection regulations.</h5>
-                            <p><i class='fa-solid fa-horizontal-rule'></i> It is important to consult a data privacy expert to understand your organization's data privacy needs.</p>
-                            <p><i class="fa-solid fa-horizontal-rule"></i> However, there are a few data privacy regulations businesses need to comply with to avoid non-compliance costs. </p>
-                            <p><i class="fa-solid fa-horizontal-rule"></i> The regulation varies based on industries, business category, turnover amount and size.</p>
-                            <p><i class="fa-solid fa-horizontal-rule"></i> Data privacy ensures fewer risks and security breaches.</p>
-                            <p><i class="fa-solid fa-horizontal-rule"></i> It also helps with increasing the brand value of an organization.</p>
-                            <p><i class="fa-solid fa-horizontal-rule"></i> Complying with the regulations is integral as it safeguards data subjects, and creates a better brand value.</p>
-                            <p><i class="fa-solid fa-horizontal-rule"></i> It is also important to stay updated with data protection policies and other requirements.</p>
-                    {% else %}
-                          <h5 class="text-secondary mt-4">Fair attempt at complying to data protection and privacy regulations espoused in the DPA of 2021.</h5>
-                            <p><i class="fa-solid fa-horizontal-rule"></i> Your organization needs to upgrade your infrastructure and policies to be at par with compliance <br> First of all, ensure that you’re compliant to the general regulations such as;
-                                <ul>
-                                    <li class="list-item"><strong>Processing on the basis of consent:</strong> Information to be provided to a data subject where processing of personal data is done on the basis of consent (Section 29 of the Act). In obtaining consent, a data controller or data processor is required to inform a data subject of its identity; the purpose of the processing operations; the type of personal data collected or used;</li>
-                                    <li><strong>Lawful grounds for processing personal data:</strong> Where a data controller uses multiple lawful bases for different processing purposes, the data controller is required to distinguish between the legal bases being used rather than bundling them into one processing purpose.</li>
-                                    <li><strong>Commercial use of personal data:</strong> Commercial use of personal data arises where the personal data is used to advance commercial or economic interests including inducing another person to buy, join, rent or lease, subscribe to, provide or exchange products, property, information or services or enabling or effecting a commercial transaction directly or indirectly.</li>
-                                    <li><strong>Cross-border transfers of personal data:</strong> Before transferring personal data outside Kenya, data controllers or data processors are obliged to ascertain that the transfer is based on:
-                                    <ul>
-                                        <li>Appropriate data protection safeguards- this includes having in place a binding agreement with the recipient of the personal data; </li>
-                                        <li>An adequacy decision made by the DC; </li>
-                                        <li>Transfer as a necessity; or </li>
-                                        <li>Consent of the data subject.</li>
-                                    </ul>
-                                    </li>
-                                </ul>
-                            </p>
-                    {% endif %}
+            {% if not entries %}
+                <div class="text-center col-md-4 pt-4 m-4 pr-4">
+                    <strong><h4 class="center border-bottom border-primary">Seems you do not have any reports!</h4> </strong>
+                    <div class="pt-4 mt-4"><h5>Fill the checklist, and upload supportive documents.</h5></div>
                 </div>
-            </div>
-        </div>
-        <div class="p-4 mt-4">
-            <small class="text-primary"><em>Wajibika na Data</em></small>
+            {% else %}
+                <div class="text-center col-md-4 pt-4 m-4 pr-4">
+                    <strong><h4 class="center border-bottom border-primary">{{ user| title }}</h4> </strong>
+                    <div class="pt-4 mt-4"><h5>Score: {{ entries.user_score }} out of {{ entries.total_values }}</h5></div>
+                    <div class="pt-4 mt-4"><h5>Percentage: {{ entries.percent_s }} %</h5></div>
+                    <div class="mt-4"><strong><h3>Compliance Level: {{ entries.tier }}</h3></strong></div>
+                </div>
+                <div class="col-md-7 p-4 m-4 border-left border-primary">
+                    <h6>Comments</h6>
+                    <div>
+                        {% if entries.percent_s > 90 %}
+                            <h5 class="text-primary mt-4">Congratulations for complying to most of the Data Protection Act regulations.</h5>
+                                <p><i class="fa-solid fa-horizontal-rule"></i> Data protection and privacy compliance will provide multiple benefits to your organizations.</p>
+                                <p><i class="fa-solid fa-horizontal-rule"></i> It not only helps your organizations prevent identity thefts but also adds to better compliance and functions. </p>
+                                <p><i class="fa-solid fa-horizontal-rule"></i> Besides, it also adds to revenue, resulting in overall growth.</p>
+                        {% elif entries.percent_s > 80 %}
+                            <h5 class="text-primary mt-4">Well done for managing to comply to a number of regulations in the DPA of 2019.</h5>
+                                <p><i class="fa-solid fa-horizontal-rule"></i> Data privacy regulations such as Data Protection Act of regulations of 2021, address key data governance and data privacy issues that safeguard user data. </p>
+                                <p><i class="fa-solid fa-horizontal-rule"></i> Hence achieving your organization's obligations to comply with the regulations.</p>
+                                <p><i class="fa-solid fa-horizontal-rule"></i> The regulations legally protect data subjects from compromise of their personally identifiable information.</p>
+                        {% elif entries.percent_s > 70 %}
+                            <h5 class="text-primary mt-4">Nice attempt for compliance to the data privacy and protection regulations.</h5>
+                                <p><i class="fa-solid fa-horizontal-rule"></i> However, your organization need to improve your compliance levels. </p>
+                                <p><i class="fa-solid fa-horizontal-rule"></i> This will cushion it against data breaches and other non-compliance penalties that might be arise</p>
+                                <p><i class="fa-solid fa-horizontal-rule"></i> Data privacy laws and regulations spell out what data protection is required, what framework should be accepted, and what penalties to avoid according.</p>
+                        {% elif entries.percent_s > 60 %}
+
+                            <h5 class="text-primary mt-4">Good attempt for compliance to the data privacy and protection regulations.</h5>
+                                <p><i class='fa-solid fa-horizontal-rule'></i> It is important to consult a data privacy expert to understand your organization's data privacy needs.</p>
+                                <p><i class="fa-solid fa-horizontal-rule"></i> However, there are a few data privacy regulations businesses need to comply with to avoid non-compliance costs. </p>
+                                <p><i class="fa-solid fa-horizontal-rule"></i> The regulation varies based on industries, business category, turnover amount and size.</p>
+                                <p><i class="fa-solid fa-horizontal-rule"></i> Data privacy ensures fewer risks and security breaches.</p>
+                                <p><i class="fa-solid fa-horizontal-rule"></i> It also helps with increasing the brand value of an organization.</p>
+                                <p><i class="fa-solid fa-horizontal-rule"></i> Complying with the regulations is integral as it safeguards data subjects, and creates a better brand value.</p>
+                                <p><i class="fa-solid fa-horizontal-rule"></i> It is also important to stay updated with data protection policies and other requirements.</p>
+                        {% else %}
+                              <h5 class="text-secondary mt-4">Fair attempt at complying to data protection and privacy regulations espoused in the DPA of 2021.</h5>
+                                <p><i class="fa-solid fa-horizontal-rule"></i> Your organization needs to upgrade your infrastructure and policies to be at par with compliance <br> First of all, ensure that you’re compliant to the general regulations such as;
+                                    <ul>
+                                        <li class="list-item"><strong>Processing on the basis of consent:</strong> Information to be provided to a data subject where processing of personal data is done on the basis of consent (Section 29 of the Act). In obtaining consent, a data controller or data processor is required to inform a data subject of its identity; the purpose of the processing operations; the type of personal data collected or used;</li>
+                                        <li><strong>Lawful grounds for processing personal data:</strong> Where a data controller uses multiple lawful bases for different processing purposes, the data controller is required to distinguish between the legal bases being used rather than bundling them into one processing purpose.</li>
+                                        <li><strong>Commercial use of personal data:</strong> Commercial use of personal data arises where the personal data is used to advance commercial or economic interests including inducing another person to buy, join, rent or lease, subscribe to, provide or exchange products, property, information or services or enabling or effecting a commercial transaction directly or indirectly.</li>
+                                        <li><strong>Cross-border transfers of personal data:</strong> Before transferring personal data outside Kenya, data controllers or data processors are obliged to ascertain that the transfer is based on:
+                                        <ul>
+                                            <li>Appropriate data protection safeguards- this includes having in place a binding agreement with the recipient of the personal data; </li>
+                                            <li>An adequacy decision made by the DC; </li>
+                                            <li>Transfer as a necessity; or </li>
+                                            <li>Consent of the data subject.</li>
+                                        </ul>
+                                        </li>
+                                    </ul>
+                                </p>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
         </div>
     </div>
+    <div class="p-4 mt-4">
+        <small class="text-primary"><em>Wajibika na Data</em></small>
+    </div>
+</div>
 
 {% endblock content %}
 

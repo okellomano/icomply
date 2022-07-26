@@ -73,5 +73,5 @@ class UserChecklistEntries(models.Model):
         verbose_name_plural = 'User Checklist Entries'
 
     def __str__(self):
-        return f'{self.user}'.title()
+        return f'{self.user} {self.percent_s} {self.tier} {self.user_score} {self.total_values}'
 
