@@ -1,15 +1,15 @@
 import io
+import pandas as pd
 import os
 
+from PIL import Image, ImageFont, ImageDraw
 from reportlab.pdfgen import canvas
 
 from django.conf import settings
 from django.core.exceptions import MultipleObjectsReturned
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
-
 
 from django.views.generic import TemplateView, ListView, DetailView
 from django.views.generic.edit import FormView
@@ -35,6 +35,7 @@ class ChecklistPageView(LoginRequiredMixin, ListView):
 
 @login_required(login_url='account_login')
 def checklist_view(request):
+    '''Processing the checklist form view. '''
 
     if request.method == 'POST':
         user = request.user
@@ -65,14 +66,6 @@ def checklist_view(request):
         'categories': Category.objects.all()
     }
     return render(request, 'checklist_quiz.html', context)
-
-
-def user_scores_view(request):
-    pass
-
-
-def user_filled_checklists(request):
-    pass
 
 
 def dpa_view(request):
@@ -121,11 +114,10 @@ class ChecklistSubmitView(TemplateView):
 
 # user score view
 def user_results_view(request, entries=None):
-    # entries = UserChecklistEntries.objects.filter(user=request.user)[0]
     try:
         entries = get_object_or_404(UserChecklistEntries.objects.filter(user=request.user))
     except MultipleObjectsReturned:
-        entries = UserChecklistEntries.objects.filter(user=request.user).first()
+        entries = UserChecklistEntries.objects.filter(user=request.user).order_by('-date_filled').first()
 
     return render(request, 'result.html', {'entries': entries})
 
@@ -154,6 +146,7 @@ class UploadView(FormView):
 
 
 def upload_documents(request):
+    '''Handles uploading of the supportive documents. '''
     if request.method == 'POST':
         form = PoliciesUploadForm(request.POST, request.FILES)
         # documents = request.FILES.getlist('document')
@@ -169,11 +162,46 @@ def upload_documents(request):
     return render(request, 'policies_upload.html', {'form': form})
 
 
-def generate_report(request, id):
-    buffer = io.BytesIO()
-    x = canvas.Canvas(buffer)
-    x.drawString(100, 100, 'Testing pdf generator')
-    x.showPage()
-    buffer.seek(0)
-    return FileResponse(buffer, as_attachment=True, filename='pdf_test.pdf')
+def generate_certificate(request):
+    '''A function for generating user certificates. '''
+
+    try:
+        data = get_object_or_404(UserChecklistEntries.objects.filter(user=request.user))
+    except MultipleObjectsReturned:
+        data = UserChecklistEntries.objects.filter(user=request.user).order_by('-date_filled').first()
+
+    data_list = {'user': data.user, 'percent': data.percent_s, 'score': data.user_score,
+                 'tier': data.tier, 'date': data.date_filled}
+
+    cert = Image.open('static/images/cert.png')
+    cert_draw = ImageDraw.Draw(cert)
+
+    tier_location = (1047, 274)
+    user_location = (635, 461)
+    date_location = (660, 698)
+    font = ImageFont.truetype('arial.ttf', 150)
+
+    cert_draw.text(user_location, data_list['user'], font=font)
+    cert_draw.text(tier_location, data_list['tier'], font=font)
+    cert_draw.text(date_location, data_list['date'], font=font)
+
+    cert.save(f'{data_list["user"]} Compliance cert.pdf')
+    return FileResponse(open(f'{data_list["user"]} Compliance cert.pdf', 'rb'), as_attachment=True, content_type='application/pdf')
+
+
+class ImpactAssessmentView(TemplateView):
+    template_name = 'dpia.html'
+
+
+class IlearnDpaView(TemplateView):
+    template_name = 'ilearn.html'
+
+
+class IEnforceView(TemplateView):
+    template_name = 'enforce.html'
+
+
+class IComplyManagerView(TemplateView):
+    template_name = 'icomply_manager.html'
+
 

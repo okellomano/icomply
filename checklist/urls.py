@@ -23,5 +23,11 @@ urlpatterns = [
     # path('user-results/', views.ResultsListView.as_view(), name='user-results'),
     path('<int:pk>', views.ResultDetailView.as_view(), name='result-details'),
     path('uploads/', views.upload_documents, name='policies-upload'),
+    path('certificate/', views.generate_certificate, name='gen_cert'),
+
+    path('impact-assessment/', views.ImpactAssessmentView.as_view(), name='impact-assessment'),
+    path('ilearn/', views.IlearnDpaView.as_view(), name='ilearndpa'),
+    path('ienforce/', views.IEnforceView.as_view(), name='ienforce'),
+    path('icomplymanager/', views.IComplyManagerView.as_view(), name='icomplymanager'),
 
 ]

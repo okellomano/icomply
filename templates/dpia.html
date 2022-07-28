@@ -1,0 +1,354 @@
+{% extends '_base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+[% load i18n %}
+{% block title %}checklist{% endblock title %}
+{% block content %}
+
+<body>
+<section class="page-title bg-2">
+  <div class="container mb-4">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="block">
+          <h1>Data Protection Impact Assessment (DPIA)</h1>
+          <p class="">The purpose of DPIA is to demonstrate the implementation of the data protection principles to ensure that data subjects retain control over their personal data.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<div class="container pt-4 border-bottom border-secondary">
+    <h4>Instructions</h4>
+    <p>Fill out this DPIA form prior to the commencement of any processing activity of personal data, or if you are making a significant change to an existing process.</p>
+    <p>Integrate the final outcomes back into your project plan.</p>
+</div>
+<div class="pt-4 container d-flex align-items-center mt-4 pb-4">
+     <!-- FORMS -->
+      <div class="col-lg-12 mx-0 px-0">
+        <div class="progress">
+          <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="50" class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" style="width: 0%"></div>
+        </div>
+        <div id="qbox-container">
+          <form class="needs-validation" id="form-wrapper" method="post" action="" name="form-wrapper" novalidate="">
+             {% csrf_token %}
+               <div id="">
+                  <div class="step">
+                     <label for="inputPassword5" class="form-label">Project Name</label>
+                        <input type="text" id="inputPassword5" class="form-control" aria-describedby="passwordHelpBlock">
+                     <div class="mb-3 mt-4">
+                       <label for="exampleInputEmail1" class="form-label">Project Outline: What and Why</label>
+                       <textarea class="form-control" id="exampleInputEmail1" rows="5"></textarea>
+                       <div id="emailHelp" class="form-text">Explain broadly what the project aims to achieve and what type of processing it involves.</div>
+                     </div>
+                  </div>
+                  <div class="step">
+                     <div class="mb-3 mt-4">
+                       <label for="exampleInputEmail1" class="form-label">Who are the data subjects?</label>
+                       <textarea class="form-control" id="exampleInputEmail2" rows="4"></textarea>
+                       <div id="emailHelp2" class="form-text"></div>
+                     </div>
+                     <div class="mb-3 mt-4">
+                       <label for="exampleInputEmail1" class="form-label">What is the classes of data are to be collected</label>
+                       <textarea class="form-control" id="exampleInputEmail3" rows="4"></textarea>
+                       <div id="emailHelp3" class="form-text"></div>
+                     </div>
+                     <div class="mb-3 mt-4">
+                       <label for="exampleInputEmail1" class="form-label">What is the class of data subjects</label>
+                       <textarea class="form-control" id="exampleInputEmail4" rows="4"></textarea>
+                       <div id="emailHelp4" class="form-text">i.e Are there any vulnerable groups/ children that form part of the data subjects</div>
+                     </div>
+                  </div>
+                  <div class="step">
+                     <h4>Describe the information flow. Describe the collection, use and deletion of personal data here.</h4>
+                     <div class="mb-3 mt-4">
+                       <label for="exampleInputEmail1" class="form-label">Where are you getting the data from</label>
+                       <textarea class="form-control" id="exampleInputEmail5" rows="4"></textarea>
+                       <div id="emailHelp5" class="form-text"></div>
+                     </div>
+                     <div class="mb-3 mt-4">
+                       <label for="exampleInputEmail1" class="form-label">How is the data being collected</label>
+                       <textarea class="form-control" id="exampleInputEmail6" rows="4"></textarea>
+                       <div id="emailHelp6" class="form-text"></div>
+                     </div>
+                     <div class="mb-3 mt-4">
+                       <label for="exampleInputEmail1" class="form-label">How much data is likely to e collected</label>
+                       <textarea class="form-control" id="exampleInputEmail7" rows="4"></textarea>
+                       <div id="emailHelp7" class="form-text"></div>
+                     </div>
+                     <div class="mb-3 mt-4">
+                       <label for="exampleInputEmail1" class="form-label">Where the data will be stored</label>
+                       <textarea class="form-control" id="exampleInputEmail8" rows="4"></textarea>
+                       <div id="emailHelp8" class="form-text"></div>
+                     </div>
+                     <div class="mb-3 mt-4">
+                       <label for="exampleInputEmail1" class="form-label">How many individuals are likely to be affected by the project</label>
+                       <textarea class="form-control" id="exampleInputEmail9" rows="4"></textarea>
+                       <div id="emailHelp9" class="form-text"></div>
+                     </div>
+                     <div class="mb-3 mt-4">
+                       <label for="exampleInputEmail1" class="form-label">How long will the data be stored</label>
+                       <input type="text" class="form-control" id="exampleInputEmail10" aria-describedby="emailHelp10">
+                       <div id="emailHelp10" class="form-text"></div>
+                     </div>
+                     <div class="mb-3 mt-4">
+                       <label for="exampleInputEmail1" class="form-label">To what extent is the data being processed</label>
+                       <textarea class="form-control" id="exampleInputEmail11" rows="4"></textarea>
+                       <div id="emailHelp11" class="form-text"></div>
+                     </div>
+                     <div class="mb-3 mt-4">
+                       <label for="exampleInputEmail1" class="form-label">Where the data could be transferred to</label>
+                       <textarea class="form-control" id="exampleInputEmail12" rows="4"></textarea>
+<!--                       <input type="text" class="form-control" id="exampleInputEmail12" aria-describedby="emailHelp12">-->
+                       <div id="emailHelp12" class="form-text"></div>
+                     </div>
+
+<!--                      <div class="form-outline">-->
+<!--                          <textarea class="form-control" id="textAreaExample1" rows="4"></textarea>-->
+<!--                          <label class="form-label" for="textAreaExample1">Message: Where the data could be transferred to</label>-->
+<!--                        </div>-->
+                  </div>
+                  <div class="step">
+                    <h4>Describe how the data processing flow complies with the seven data protection principles-</h4>
+                     <div class="mb-3 mt-4">
+                       <label for="exampleInputEmail1" class="form-label">Lawfulness, fairness and transparency</label>
+                       <textarea class="form-control" id="exampleInputEmail13" rows="4"></textarea>
+                       <div id="emailHelp13" class="form-text"></div>
+                     </div>
+                     <div class="mb-3 mt-4">
+                       <label for="exampleInputEmail1" class="form-label">Purpose limitation</label>
+                       <textarea class="form-control" id="exampleInputEmail14" rows="4"></textarea>
+                       <div id="emailHelp14" class="form-text"></div>
+                     </div>
+                     <div class="mb-3 mt-4">
+                       <label for="exampleInputEmail1" class="form-label">Data minimisation</label>
+                       <textarea class="form-control" id="exampleInputEmail15" rows="4"></textarea>
+                       <div id="emailHelp15" class="form-text"></div>
+                     </div>
+                     <div class="mb-3 mt-4">
+                       <label for="exampleInputEmail1" class="form-label">Accuracy</label>
+                       <textarea class="form-control" id="exampleInputEmail16" rows="4"></textarea>
+                       <div id="emailHelp16" class="form-text"></div>
+                     </div>
+                     <div class="mb-3 mt-4">
+                       <label for="exampleInputEmail1" class="form-label">Storage Limitation</label>
+                       <textarea class="form-control" id="exampleInputEmail17" rows="4"></textarea>
+                       <div id="emailHelp17" class="form-text"></div>
+                     </div>
+                     <div class="mb-3 mt-4">
+                       <label for="exampleInputEmail1" class="form-label">Integrity and confidentiality</label>
+                       <textarea class="form-control" id="exampleInputEmail18" rows="4"></textarea>
+                       <div id="emailHelp18" class="form-text"></div>
+                     </div>
+                     <div class="mb-3 mt-4">
+                       <label for="exampleInputEmail1" class="form-label">Accountability</label>
+                       <textarea class="form-control" id="exampleInputEmail19" rows="4"></textarea>
+                       <div id="emailHelp19" class="form-text"></div>
+                     </div>
+                  </div>
+                  <div class="step">
+                     <h4>Describe compliance and proportionality, measures, in particular:</h4>
+                     <div class="mb-3 mt-4">
+                       <label for="exampleInputEmail1" class="form-label">What is your lawful basis for processing</label>
+                       <textarea class="form-control" id="exampleInputEmail20" rows="4"></textarea>
+                       <div id="emailHelp20" class="form-text"></div>
+                     </div>
+                     <div class="mb-3 mt-4">
+                       <label for="exampleInputEmail1" class="form-label">How is consent to be obtained, if at all?</label>
+                       <textarea class="form-control" id="exampleInputEmail21" rows="4"></textarea>
+                       <div id="emailHelp21" class="form-text"></div>
+                     </div>
+                     <div class="mb-3 mt-4">
+                       <label for="exampleInputEmail1" class="form-label">Does the processing actually achieve your purpose?</label>
+                       <textarea class="form-control" id="exampleInputEmail22" rows="4"></textarea>
+                       <div id="emailHelp22" class="form-text"></div>
+                     </div>
+                     <div class="mb-3 mt-4">
+                       <label for="exampleInputEmail1" class="form-label">Is there another way to achieve the same outcome?</label>
+                       <textarea class="form-control" id="exampleInputEmail23" rows="4"></textarea>
+                       <div id="emailHelp23" class="form-text"></div>
+                     </div>
+                     <div class="mb-3 mt-4">
+                       <label for="exampleInputEmail1" class="form-label">How will you ensure data quality and data minimization?</label>
+                       <textarea class="form-control" id="exampleInputEmail24" rows="4"></textarea>
+                       <div id="emailHelp24" class="form-text"></div>
+                     </div>
+                     <div class="mb-3 mt-4">
+                       <label for="exampleInputEmail1" class="form-label">What is your lawful basis for processing</label>
+                       <textarea class="form-control" id="exampleInputEmail25" rows="4"></textarea>
+                       <div id="emailHelp25" class="form-text"></div>
+                     </div>
+                     <div class="mb-3 mt-4">
+                       <label for="exampleInputEmail1" class="form-label">What information will you give individuals?</label>
+                       <textarea class="form-control" id="exampleInputEmail26" rows="4"></textarea>
+                       <div id="emailHelp26" class="form-text"></div>
+                     </div>
+                     <div class="mb-3 mt-4">
+                       <label for="exampleInputEmail1" class="form-label">How will you help support your rights?</label>
+                       <textarea class="form-control" id="exampleInputEmail27" rows="4"></textarea>
+                       <div id="emailHelp27" class="form-text"></div>
+                     </div>
+                     <div class="mb-3 mt-4">
+                       <label for="exampleInputEmail1" class="form-label">What measures do you take to ensure compliance by the Controller and Processor?</label>
+                       <textarea class="form-control" id="exampleInputEmail28" rows="4"></textarea>
+                       <div id="emailHelp28" class="form-text"></div>
+                     </div>
+
+                     <div class="mb-3 mt-4">
+                       <label for="exampleInputEmail1" class="form-label">What parties are involved in the processing and what are their specific roles?</label>
+                       <textarea class="form-control" id="exampleInputEmail29" rows="4"></textarea>
+                       <div id="emailHelp29" class="form-text"></div>
+                     </div>
+                     <div class="mb-3 mt-4">
+                       <label for="exampleInputEmail1" class="form-label">How do you safeguard the processing of the personal data?</label>
+                       <textarea class="form-control" id="exampleInputEmail30" rows="4"></textarea>
+                       <div id="emailHelp30" class="form-text"></div>
+                     </div>
+                     <div class="mb-3 mt-4">
+                       <label for="exampleInputEmail1" class="form-label">How do you safeguard any international transfers?</label>
+                       <textarea class="form-control" id="exampleInputEmail31" rows="4"></textarea>
+                       <div id="emailHelp31" class="form-text"></div>
+                     </div>
+                  </div>
+                  <div class="step">
+                     <h4>An assessment of the risks to the rights and freedoms of data subjects.</h4>
+                     <h6>Explain what practical steps you will take to ensure that you identify and address privacy risks.</h6>
+                     <div class="mb-3 mt-4">
+                       <label for="exampleInputEmail1" class="form-label">Will the project involve the collection of new identifiable or potentially identifiable data about data subjects?</label>
+                        <div>
+                           <input class="form-check-input " name="reply" type="radio" value="Yes">
+                           <label class="form-check-label radio-lb">Yes</label>
+                           <input class="form-check-input ml-2" name="reply" type="radio" value="No">
+                           <label class="form-check-label radio-lb ml-4">No</label>
+                        </div>
+                       <textarea class="form-control" id="exampleInputEmail32" rows="4"></textarea>
+                       <div id="emailHelp32" class="form-text">Please give explanation</div>
+                     </div>
+
+                      <div class="mb-3 mt-4">
+                       <label for="exampleInputEmail1" class="form-label">Will the project compel data subjects to provide information about themselves, i.e where they will have little awareness or choice?</label>
+                        <div>
+                           <input class="form-check-input " name="reply" type="radio" value="Yes">
+                           <label class="form-check-label radio-lb">Yes</label>
+                           <input class="form-check-input ml-2" name="reply" type="radio" value="No">
+                           <label class="form-check-label radio-lb ml-4">No</label>
+                        </div>
+                       <textarea class="form-control" id="exampleInputEmail33" rows="4"></textarea>
+                       <div id="emailHelp33" class="form-text">Please give explanation</div>
+                     </div>
+
+                      <div class="mb-3 mt-4">
+                       <label for="exampleInputEmail1" class="form-label">Will identifiable information about the data subjects be shared with other organizations or people whi have not previously had routine access to the information?</label>
+                        <div>
+                           <input class="form-check-input " name="reply" type="radio" value="Yes">
+                           <label class="form-check-label radio-lb">Yes</label>
+                           <input class="form-check-input ml-2" name="reply" type="radio" value="No">
+                           <label class="form-check-label radio-lb ml-4">No</label>
+                        </div>
+                       <textarea class="form-control" id="exampleInputEmail34" rows="4"></textarea>
+                       <div id="emailHelp34" class="form-text">Please give explanation</div>
+                     </div>
+
+                      <div class="mb-3 mt-4">
+                       <label for="exampleInputEmail1" class="form-label">Are you using information about data subjects for a purpose it is not currently used for in a new way, i.e. using data collected to provide care for an evaluation of service development</label>
+                        <div id="input-container4">
+                           <input class="form-check-input " name="reply" type="radio" value="Yes">
+                           <label class="form-check-label radio-lb">Yes</label>
+                           <input class="form-check-input ml-2" name="reply" type="radio" value="No">
+                           <label class="form-check-label radio-lb ml-4">No</label>
+                        </div>
+                       <textarea class="form-control" id="exampleInputEmail35" rows="4"></textarea>
+                       <div id="emailHelp35" class="form-text">Please give explanation</div>
+                     </div>
+
+                  </div>
+                  <div class="step">
+                     <div class="mb-3 mt-4">
+                       <label for="exampleInputEmail1" class="form-label">Where information about data subjects is being used, would this be likely to raise privacy concerns or expectations, i.e. will it include health records, criminal records or other information that people may consider to be sensitive and private and may cause them concern or distress?</label>
+                        <div>
+                           <input class="form-check-input " name="reply" type="radio" value="Yes">
+                           <label class="form-check-label radio-lb">Yes</label>
+                           <input class="form-check-input ml-2" name="reply" type="radio" value="No">
+                           <label class="form-check-label radio-lb ml-4">No</label>
+                        </div>
+                       <textarea class="form-control" id="exampleInputEmail36" rows="4"></textarea>
+                       <div id="emailHelp36" class="form-text">Please give explanation</div>
+                     </div>
+
+                      <div class="mb-3 mt-4">
+                       <label for="exampleInputEmail1" class="form-label">Will the project result in you making decisions in ways which can have a significant impact on data subjects, i.e. will it affect the services a person receives?</label>
+                        <div>
+                           <input class="form-check-input " name="reply" type="radio" value="Yes">
+                           <label class="form-check-label radio-lb">Yes</label>
+                           <input class="form-check-input ml-2" name="reply" type="radio" value="No">
+                           <label class="form-check-label radio-lb ml-4">No</label>
+                        </div>
+                       <textarea class="form-control" id="exampleInputEmail37" rows="4"></textarea>
+                       <div id="emailHelp37" class="form-text">Please give explanation</div>
+                     </div>
+
+                       <div class="mb-3 mt-4">
+                       <label for="exampleInputEmail1" class="form-label">Does the project involve you using new technology which might be perceived as being privacy intrusive, i.e. using biometrics, facial recognition or automated decision making?</label>
+                        <div>
+                           <input class="form-check-input " name="reply" type="radio" value="Yes">
+                           <label class="form-check-label radio-lb">Yes</label>
+                           <input class="form-check-input ml-2" name="reply" type="radio" value="No">
+                           <label class="form-check-label radio-lb ml-4">No</label>
+                        </div>
+                       <textarea class="form-control" id="exampleInputEmail38" rows="4"></textarea>
+                       <div id="emailHelp38" class="form-text">Please give explanation</div>
+                     </div>
+
+                       <div class="mb-3 mt-4">
+                       <label for="exampleInputEmail1" class="form-label">Is a service being transferred to a new supplier (re-contracted) and the end of an existing contract?</label>
+                        <div>
+                           <input class="form-check-input " name="reply" type="radio" value="Yes">
+                           <label class="form-check-label radio-lb">Yes</label>
+                           <input class="form-check-input ml-2" name="reply" type="radio" value="No">
+                           <label class="form-check-label radio-lb ml-4">No</label>
+                        </div>
+                       <textarea class="form-control" id="exampleInputEmail39" rows="4"></textarea>
+                       <div id="emailHelp39" class="form-text">Please give explanation</div>
+                     </div>
+
+                       <div class="mb-3 mt-4">
+                       <label for="exampleInputEmail1" class="form-label">Is processing of identifiable / potentially identifiable data being moved to a new organization (but with same staff and process)</label>
+                        <div>
+                           <input class="form-check-input " name="reply" type="radio" value="Yes">
+                           <label class="form-check-label radio-lb">Yes</label>
+                           <input class="form-check-input ml-2" name="reply" type="radio" value="No">
+                           <label class="form-check-label radio-lb ml-4">No</label>
+                        </div>
+                       <textarea class="form-control" id="exampleInputEmail40" rows="4"></textarea>
+                       <div id="emailHelp40" class="form-text">Please give explanation</div>
+                     </div>
+                  </div>
+
+
+                  <div id="success">
+                     <div class="mt-5">
+                        <h4>Success!</h4>
+    <!--                    <p>Meanwhile, clean your hands often, </p>-->
+                        <a class="back-link" href="">Go back from the beginning ➜</a>
+                     </div>
+                  </div>
+               </div>
+               <div id="q-box__buttons">
+              <button id="prev-btn" type="button">Previous</button>
+              <button id="next-btn" type="button">Next</button>
+              <button id="submit-btn" type="submit">Submit</button>
+           </div>
+          </form>
+        </div>
+      </div>
+    <div id="preloader-wrapper">
+       <div id="preloader"></div>
+       <div class="preloader-section section-left"></div>
+       <div class="preloader-section section-right"></div>
+   </div>
+</div>
+
+</body>
+{% endblock content %}

@@ -30,6 +30,10 @@
     <!-- Main Stylesheet -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
+    <!---- assessment -->
+    <link rel="stylesheet" href="{% static 'css/assess.css' %}">
+
+
     <!-- accordion styles -->
     <link rel="stylesheet" href="{% static 'css/accordion_style.css' %}">
 
@@ -62,9 +66,23 @@
                         <li class="nav-item">
                         <a class="nav-link white" href="{% url 'checklist:home' %}">Home</a>
                       </li>
-                      <li class="nav-item">
-                        <a class="nav-link white" href="{% url 'checklist:checklist' %}">Checklist</a>
+
+                       <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown0" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          e-Services
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown0">
+                          <li><a class="dropdown-item" href="{% url 'checklist:impact-assessment' %}">DPIA</a></li>
+                          <li><a class="nav-link white" href="{% url 'checklist:checklist' %}">Checklist</a></li>
+                          <li><a class="nav-link" href="{% url 'checklist:icomplymanager' %}">iComply Manager</a></li>
+                          <li><a class="nav-link" href="{% url 'checklist:ienforce' %}">iEnforce DPA</a></li>
+                          <li><a class="nav-link" href="{% url 'checklist:ilearndpa' %}">iLearnDPA</a></li>
+                        </ul>
                       </li>
+
+<!--                      <li class="nav-item">-->
+<!--                        <a class="nav-link white" href="{% url 'checklist:checklist' %}">Checklist</a>-->
+<!--                      </li>-->
                       <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                           Resources
@@ -87,17 +105,17 @@
 
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     {% if user.is_authenticated %}
-
-                        <li class="nav-item">
-                          <a class="nav-link" href="#">{{ user.username.title }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'checklist:user-results' %}">Reports</a>
+                        <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          {{ user.username.title }}
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
+                            <li class="dropdown-item"><a class="nav-link" href="{% url 'checklist:user-results' %}">Reports</a></li>
+<!--                            <li class="dropdown-item"><a class="nav-link" href="{% url 'checklist:gen_cert' %}">Certificate</a></li>-->
+                            <li class="dropdown-item"><a class="nav-link" href="{% url 'account_logout' %}">Logout</a></li>
+                        </ul>
                       </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="{% url 'account_logout' %}">Logout</a>
-                        </li>
-                    {% else %}
+                        {% else %}
                       <li class="nav-item">
                           <a class="nav-link" href="{% url 'account_login' %}">Login</a>
                         </li>
@@ -118,13 +136,9 @@
     <div class="">{% block content %} {% endblock content %}</div>
     <div class="">{% block footer %}{% endblock footer %}</div>
 
-    <!-- Optional JavaScript; choose one of the two! -->
-
-    <!-- Option 1: Bootstrap Bundle with Popper -->
-    {% block javascripts %}
-
-    {% endblock javascripts %}
+    {% block javascripts %}{% endblock javascripts %}
     <script src="{% static 'js/app.js' %}"></script>
+    <script src="{% static 'js/assessment.js' %}"></script>
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
   </body>

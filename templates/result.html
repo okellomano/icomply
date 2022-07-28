@@ -2,7 +2,7 @@
 {% load static %}
 {% load crispy_forms_tags %}
 [% load i18n %}
-{% block title %}checklist{% endblock title %}
+{% block title %}organization report{% endblock title %}
 {% block content %}
 <div>
     <div class="container">
@@ -38,6 +38,22 @@
                                 <p><i class="fa-solid fa-horizontal-rule"></i> However, your organization need to improve your compliance levels. </p>
                                 <p><i class="fa-solid fa-horizontal-rule"></i> This will cushion it against data breaches and other non-compliance penalties that might be arise</p>
                                 <p><i class="fa-solid fa-horizontal-rule"></i> Data privacy laws and regulations spell out what data protection is required, what framework should be accepted, and what penalties to avoid according.</p>
+<!--                        {% elif entries.percent_s > 10 %}-->
+
+
+<!--                        {% elif entries.percent_s > 20 %}-->
+
+<!--                        {% elif entries.percent_s > 30 %}-->
+
+
+<!--                        {% elif entries.percent_s > 40 %}-->
+
+<!--                        {% elif entries.percent_s > 50 %}-->
+
+<!--                        {% elif entries.percent_s > 70 %}-->
+
+<!--                        {% elif entries.percent_s > 60 %}-->
+
                         {% elif entries.percent_s > 60 %}
 
                             <h5 class="text-primary mt-4">Good attempt for compliance to the data privacy and protection regulations.</h5>
@@ -75,7 +91,4 @@
         <small class="text-primary"><em>Wajibika na Data</em></small>
     </div>
 </div>
-
 {% endblock content %}
-
-

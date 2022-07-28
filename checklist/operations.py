@@ -1,11 +1,9 @@
 from django.db.models import Sum
-
-from django.http import HttpResponseRedirect
 from .models import Checklist, UserChecklistEntries
-from .forms import PoliciesUploadForm
 
 
 def calculate_scores(score_entries=None):
+    '''Calculating the user score. '''
     user_score_total = 0
     for score_id in score_entries:
         checklist_item = Checklist.objects.get(id=score_id)
@@ -20,6 +18,7 @@ def calculate_scores(score_entries=None):
 
 
 def get_compliance_tier(percent=None):
+    '''Get and returns the percentage score. '''
     if percent > 90:
         tier_level = 'Tier 1'
     elif percent > 80:
@@ -35,6 +34,7 @@ def get_compliance_tier(percent=None):
 
 
 def save_user_entries(user=None, entries=None):
+    '''Save user results to the database. '''
 
     for entry_id in entries:
         try:
