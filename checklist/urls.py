@@ -30,4 +30,9 @@ urlpatterns = [
     path('ienforce/', views.IEnforceView.as_view(), name='ienforce'),
     path('icomplymanager/', views.IComplyManagerView.as_view(), name='icomplymanager'),
 
+    path('report/pdf/', views.result_pdf_reports, name='report'),
+    path('cert/', views.cert_pdf, name='cert'),
+    path('self-assessment/', views.ChecklistDemoView.as_view(), name='checklist-demo'),
+
+    path('nocert/', views.NoCertView.as_view(), name='nocert'),
 ]

@@ -1,0 +1,17 @@
+{% extends '_base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+[% load i18n %}
+{% block title %}organization report{% endblock title %}
+{% block content %}
+
+<div class="container justify-content-center p-4 m-4 ">
+    <div class="text-center">
+    <strong><p class="center pt-4">Please improve on your compliance level to qualify for a compliance certificate.</p></strong>
+   <p><a href="{% url 'checklist:user-results' %}">View recommendations</a> </p>
+
+    </div>
+</div>
+
+
+{% endblock content %}

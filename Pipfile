@@ -17,6 +17,7 @@ django-multiupload = "*"
 django-reports-admin = "*"
 pillow = "*"
 pandas = "*"
+weasyprint = "*"
 
 [dev-packages]
 

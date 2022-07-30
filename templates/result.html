@@ -15,46 +15,49 @@
                 </div>
             {% else %}
                 <div class="text-center col-md-4 pt-4 m-4 pr-4">
-                    <strong><h4 class="center border-bottom border-primary">{{ user| title }}</h4> </strong>
+                    <strong><h4 class="center border-bottom border-primary">{{ entries.user| title }}</h4> </strong>
                     <div class="pt-4 mt-4"><h5>Score: {{ entries.user_score }} out of {{ entries.total_values }}</h5></div>
                     <div class="pt-4 mt-4"><h5>Percentage: {{ entries.percent_s }} %</h5></div>
                     <div class="mt-4"><strong><h3>Compliance Level: {{ entries.tier }}</h3></strong></div>
+                    {% if entries.percent_s > 70 %}
+                        <li class="dropdown-item"><a class="nav-link" href="{% url 'checklist:cert' %}">Generate Certificate</a></li>
+                    {% endif %}
                 </div>
                 <div class="col-md-7 p-4 m-4 border-left border-primary">
-                    <h6>Comments</h6>
+                    <h6>Recommendations</h6>
                     <div>
+
                         {% if entries.percent_s > 90 %}
-                            <h5 class="text-primary mt-4">Congratulations for complying to most of the Data Protection Act regulations.</h5>
-                                <p><i class="fa-solid fa-horizontal-rule"></i> Data protection and privacy compliance will provide multiple benefits to your organizations.</p>
+                            <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+                            <h5 class="text-primary mt-4">Congratulations for complying to most of the Data Protection Act regulations .</h5>
+
+                                <p>How to maintain your compliance score rating.<br> Follow the guidelines on icomplydpa template on how to maintain your compliance levels in order to add value to your brand.</p>
+<!--                                <p><i class="fa-solid fa-horizontal-rule"></i> Data protection and privacy compliance will provide multiple benefits to your organizations.</p>-->
                                 <p><i class="fa-solid fa-horizontal-rule"></i> It not only helps your organizations prevent identity thefts but also adds to better compliance and functions. </p>
-                                <p><i class="fa-solid fa-horizontal-rule"></i> Besides, it also adds to revenue, resulting in overall growth.</p>
+<!--                                <p><i class="fa-solid fa-horizontal-rule"></i> Besides, it also adds to revenue, resulting in overall growth.</p>-->
+                        <p><a href="{% url 'checklist:dpa_regulations' %}" class="link-item">Learn More</a></p>
+
                         {% elif entries.percent_s > 80 %}
+                        <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
                             <h5 class="text-primary mt-4">Well done for managing to comply to a number of regulations in the DPA of 2019.</h5>
+
                                 <p><i class="fa-solid fa-horizontal-rule"></i> Data privacy regulations such as Data Protection Act of regulations of 2021, address key data governance and data privacy issues that safeguard user data. </p>
                                 <p><i class="fa-solid fa-horizontal-rule"></i> Hence achieving your organization's obligations to comply with the regulations.</p>
                                 <p><i class="fa-solid fa-horizontal-rule"></i> The regulations legally protect data subjects from compromise of their personally identifiable information.</p>
+
+                            <p><a href="{% url 'checklist:dpa_regulations' %}" class="link-item">Learn More</a></p>
+
                         {% elif entries.percent_s > 70 %}
+                        <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
                             <h5 class="text-primary mt-4">Nice attempt for compliance to the data privacy and protection regulations.</h5>
                                 <p><i class="fa-solid fa-horizontal-rule"></i> However, your organization need to improve your compliance levels. </p>
                                 <p><i class="fa-solid fa-horizontal-rule"></i> This will cushion it against data breaches and other non-compliance penalties that might be arise</p>
                                 <p><i class="fa-solid fa-horizontal-rule"></i> Data privacy laws and regulations spell out what data protection is required, what framework should be accepted, and what penalties to avoid according.</p>
-<!--                        {% elif entries.percent_s > 10 %}-->
 
-
-<!--                        {% elif entries.percent_s > 20 %}-->
-
-<!--                        {% elif entries.percent_s > 30 %}-->
-
-
-<!--                        {% elif entries.percent_s > 40 %}-->
-
-<!--                        {% elif entries.percent_s > 50 %}-->
-
-<!--                        {% elif entries.percent_s > 70 %}-->
-
-<!--                        {% elif entries.percent_s > 60 %}-->
+                        <p><a href="{% url 'checklist:dpa_regulations' %}" class="link-item">Learn More</a></p>
 
                         {% elif entries.percent_s > 60 %}
+                        <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
 
                             <h5 class="text-primary mt-4">Good attempt for compliance to the data privacy and protection regulations.</h5>
                                 <p><i class='fa-solid fa-horizontal-rule'></i> It is important to consult a data privacy expert to understand your organization's data privacy needs.</p>
@@ -64,7 +67,89 @@
                                 <p><i class="fa-solid fa-horizontal-rule"></i> It also helps with increasing the brand value of an organization.</p>
                                 <p><i class="fa-solid fa-horizontal-rule"></i> Complying with the regulations is integral as it safeguards data subjects, and creates a better brand value.</p>
                                 <p><i class="fa-solid fa-horizontal-rule"></i> It is also important to stay updated with data protection policies and other requirements.</p>
+
+                            <p><a href="{% url 'checklist:dpa_regulations' %}" class="link-item">Learn More</a></p>
+
+                        {% elif entries.percent_s > 50 %}
+                        <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+                            <h5 class="text-primary mt-4">Good attempt for.</h5>
+                            <p>The Data Protection Act contains a set of principles that organizations, government and businesses have to adhere to in order to keep someone’s data accurate, safe, secure and lawful.</p>
+                            <p>These principles ensure data is:</p>
+                                <ul>
+                                    <li>Only used in specifically stated ways</li>
+                                    <li>Not stored for longer than necessary</li>
+                                    <li>Used only in relevant ways</li>
+                                    <li>Kept safe and secure</li>
+                                    <li>Used only within the confines of the law</li>
+                                    <li>Stored following people’s data protection rights</li>
+                                </ul>
+
+                                <p><a href="{% url 'checklist:dpa_regulations' %}" class="link-item">Learn More</a></p>
+
+                        {% elif entries.percent_s > 40 %}
+                        <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+                            <h5 class="text-primary mt-4">Upgrade your compliance status to get the best rating!!</h5>
+                            <p>Importance of upholding data protection and privacy laws</p>
+                            <ul>
+                                <li>To meet compliance requirements</li>
+                                <li>To prevent breaches that hurt organizations</li>
+                                <li>To prevent breaches that hurt data subjects</li>
+                                <li>To maintain and improve brand value</li>
+                                <li>To strengthen and grow business</li>
+                                <li>To support ethics</li>
+                                <li>To maintain public, investor and customer trust</li>
+                                <li>To support your customers’ wishes</li>
+                                <li>To build customer loyalty</li>
+                            </ul>
+
+                        <p><a href="{% url 'checklist:dpa_regulations' %}" class="link-item">Learn More</a></p>
+
+                        {% elif entries.percent_s > 30 %}
+                        <i class="fa fa-star"></i><i class="fa fa-star"></i>
+                            <h5 class="text-primary mt-4">Increase your organization's compliance levels by:</h5>
+                            <ul>
+                                <li>Following the DPA guidelines on data protection on i~Comply portal</li>
+                                <li>Performing regular internal and external audit.</li>
+                                <li>Performing a Data Impact Assessment on i~Comply website.</li>
+                                <li>Reporting any cases of data breach as soon as they occur.</li>
+                                <li>Informing your data subjects in case of any data breach on time.</li>
+                            </ul>
+
+                        <p><a href="{% url 'checklist:dpa_regulations' %}" class="link-item">Learn More</a></p>
+
+                        {% elif entries.percent_s > 20 %}
+                        <i class="fa fa-star"></i><i class="fa fa-star"></i>
+                        <h5 class="text-primary mt-4">The following actions could lead to low compliance score rates and exposure to non-compliance fines:</h5>
+                            <ul>
+                                <li>Failure to implement and maintain reasonable data security measures.</li>
+                                <li>Failure to abide by any applicable self-regulatory principles of the organization's industry.</li>
+                                <li>Failure to follow a published privacy policy.</li>
+                                <li>Transfer personal information in a manner not disclosed on the privacy policy.</li>
+                                <li>Make inaccurate privacy and security representations (lying) to consumers and in privacy policies.</li>
+                                <li>Failure to provide sufficient security for personal data.</li>
+                                <li>Violation of consumer data privacy rights by collecting, processing or sharing consumer information.</li>
+                            </ul>
+
+                        <p><a href="{% url 'checklist:dpa_regulations' %}" class="link-item">Learn More</a></p>
+
+                        {% elif entries.percent_s > 10 %}
+                        <i class="fa fa-star"></i>
+                        <h5 class="text-primary mt-4">How to avoid risking your organization to data related attacks.</h5>
+                        <p>Implementation of data privacy policies to prevent occurrence of data breaches such as:</p>
+                            <ul>
+                                <li>Data protection Impact Assessment</li>
+                                <li>Data privacy policies</li>
+                                <li>Data protection policies</li>
+                                <li>Data retention policies</li>
+                                <li>Data security policies</li>
+                                <li>Data processor contracts</li>
+                                <li>Data sharing agreements</li>
+                                <li>System use procedures </li>
+                            </ul>
+
+                        <p><a href="{% url 'checklist:dpa_regulations' %}" class="link-item">Learn More</a></p>
                         {% else %}
+                            <i class="fa fa-star"></i>
                               <h5 class="text-secondary mt-4">Fair attempt at complying to data protection and privacy regulations espoused in the DPA of 2021.</h5>
                                 <p><i class="fa-solid fa-horizontal-rule"></i> Your organization needs to upgrade your infrastructure and policies to be at par with compliance <br> First of all, ensure that you’re compliant to the general regulations such as;
                                     <ul>
@@ -73,7 +158,7 @@
                                         <li><strong>Commercial use of personal data:</strong> Commercial use of personal data arises where the personal data is used to advance commercial or economic interests including inducing another person to buy, join, rent or lease, subscribe to, provide or exchange products, property, information or services or enabling or effecting a commercial transaction directly or indirectly.</li>
                                         <li><strong>Cross-border transfers of personal data:</strong> Before transferring personal data outside Kenya, data controllers or data processors are obliged to ascertain that the transfer is based on:
                                         <ul>
-                                            <li>Appropriate data protection safeguards- this includes having in place a binding agreement with the recipient of the personal data; </li>
+                                            <li>Appropriate data protection safeguards, this includes having in place a binding agreement with the recipient of the personal data; </li>
                                             <li>An adequacy decision made by the DC; </li>
                                             <li>Transfer as a necessity; or </li>
                                             <li>Consent of the data subject.</li>
@@ -81,6 +166,7 @@
                                         </li>
                                     </ul>
                                 </p>
+                        <p><a href="{% url 'checklist:dpa_regulations' %}" class="link-item">Learn More</a></p>
                         {% endif %}
                     </div>
                 </div>

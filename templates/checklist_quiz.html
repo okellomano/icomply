@@ -62,45 +62,6 @@
 
     <!------------------------------------------- end dynamic accordion ------------------------------------------>
 
-
-<!--    <div class="">-->
-<!--        <div class="container overflow-hidden">-->
-<!--          <form method='post' class="mt-4">-->
-<!--            {% csrf_token %}-->
-<!--              {% for category in categories %}-->
-<!--              <table class="table table-borderless mb-4">-->
-<!--                  <thead>-->
-<!--                    <tr>-->
-<!--                        <th scope="col"><h4>{{ category.type }}</h4></th>-->
-<!--                    </tr>-->
-<!--                  </thead>-->
-<!--                  <tbody>-->
-<!--                  {% for item in category.categories.all %}-->
-<!--                    <tr>-->
-<!--                        <td>-->
-<!--                            {% if item.implemented %}-->
-<!--                                <input class="form-check-input mr-2" type="checkbox"  checked="checked" value={{ item.value }} name="boxes">-->
-<!--                            {% else %}-->
-<!--                                <input class="form-check-input mr-2" type="checkbox"  value={{ item.value }} name="boxes">-->
-<!--                            {% endif %}-->
-<!--                            {{ item.checklist_item }}-->
-<!--                        </td>-->
-<!--                        <td></td>-->
-<!--                    </tr>-->
-<!--                  {% endfor %}-->
-<!--                    <hr>-->
-<!--              {% endfor %}-->
-<!--                  </tbody>-->
-<!--                </table>-->
-<!--              <div class="pb-4">-->
-<!--                   <input class="mt-4 btn btn-primary" type="submit" value="submit">-->
-<!--              </div>-->
-<!--          </form>-->
-<!--            <br>-->
-<!--        </div>-->
-<!--    </div>-->
-
-
 </div>
 
 

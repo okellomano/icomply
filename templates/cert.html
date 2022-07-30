@@ -1,0 +1,31 @@
+{% extends '_base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+[% load i18n %}
+{% block title %}organization report{% endblock title %}
+{% block content %}
+
+<div class="text-center col-md-4 pt-4 m-4 pr-4 border border-primary">
+    <img src="{% static 'images/logo.png' %}" height="80" width="200" alt="">
+<!--                <strong><h4 class="center border-bottom border-primary">{{ entries.user| title }}</h4> </strong>-->
+    <strong><h4 class="center border-bottom border-primary">Data Protection Act, 2019</h4> </strong>
+    <br><br>
+
+    <strong><h4 class="center">CERTIFICATE OF COMPLIANCE</h4> </strong>
+
+    <br>
+    <p class="pt-4 mt-4 text-center">This Certificate is presented to <br><strong class="text-underline"> {{ entries.user|title }}</strong></p>
+    <br>
+    <p>For complying with the regulations of DPA, 2019.</p>
+
+    <br>
+    <p class="text-center">Awarded on</p>
+    <p class="text-center">{{ entries.date_filled }}</p>
+    <p class="text-center pt-3 text-primary">******************************************</p>
+
+    <div class="pt-4 mt-4"><h6>Score: {{ entries.user_score }} out of {{ entries.total_values }}</h6></div>
+    <div class=""><h6>Percentage: {{ entries.percent_s }} %</h6></div>
+    <div class=""><strong><h6>Compliance Status: {{ entries.tier }}</h6></strong></div>
+</div>
+
+{% endblock content %}

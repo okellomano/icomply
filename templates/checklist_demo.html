@@ -1,0 +1,919 @@
+{% extends '_base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+[% load i18n %}
+{% block title %}self assessment{% endblock title %}
+{% block content %}
+<!-- MultiStep Form -->
+<style>
+    * {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    height: 100%;
+}
+
+/*Background color*/
+#grad1 {
+    background-color: : #9C27B0;
+   /* background: linear-gradient(to bottom right, #ccffff -23%, #ccccff 100%);*/
+    background: linear-gradient(to bottom, #ffffff -18%, #999966 125%);
+}
+
+/*form styles*/
+#msform {
+    text-align: center;
+    position: relative;
+    margin-top: 20px;
+}
+
+#msform fieldset .form-card {
+    background: white;
+    border: 0 none;
+    border-radius: 0px;
+    box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.2);
+    padding: 20px 40px 30px 40px;
+    box-sizing: border-box;
+    width: 94%;
+    margin: 0 3% 20px 3%;
+
+    /*stacking fieldsets above each other*/
+    position: relative;
+}
+
+#msform fieldset {
+    background: white;
+    border: 0 none;
+    border-radius: 0.5rem;
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0;
+    padding-bottom: 20px;
+
+    /*stacking fieldsets above each other*/
+    position: relative;
+}
+
+/*Hide all except first fieldset*/
+#msform fieldset:not(:first-of-type) {
+    display: none;
+}
+
+#msform fieldset .form-card {
+    text-align: left;
+    color: #9E9E9E;
+}
+
+#msform input, #msform textarea {
+  /*  padding: 0px 8px 4px 8px;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    border-radius: 0px;
+    margin-bottom: 25px;
+    margin-top: 2px;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: montserrat;
+    color: #2C3E50;
+    font-size: 16px;
+    letter-spacing: 1px; */
+}
+
+#msform input:focus, #msform textarea:focus {
+    -moz-box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    border: none;
+    font-weight: bold;
+    border-bottom: 2px solid skyblue;
+    outline-width: 0;
+}
+
+/*Blue Buttons*/
+#msform .action-button {
+    width: 100px;
+    background: skyblue;
+    font-weight: bold;
+    color: white;
+    border: 0 none;
+    border-radius: 0px;
+    cursor: pointer;
+    padding: 10px 5px;
+    margin: 10px 5px;
+}
+
+#msform .action-button:hover, #msform .action-button:focus {
+    box-shadow: 0 0 0 2px white, 0 0 0 3px skyblue;
+}
+
+/*Previous Buttons*/
+#msform .action-button-previous {
+    width: 100px;
+    background: #616161;
+    font-weight: bold;
+    color: white;
+    border: 0 none;
+    border-radius: 0px;
+    cursor: pointer;
+    padding: 10px 5px;
+    margin: 10px 5px;
+}
+
+#msform .action-button-previous:hover, #msform .action-button-previous:focus {
+    box-shadow: 0 0 0 2px white, 0 0 0 3px #616161;
+}
+
+/*Dropdown List Exp Date*/
+select.list-dt {
+    border: none;
+    outline: 0;
+    border-bottom: 1px solid #ccc;
+    padding: 2px 5px 3px 5px;
+    margin: 2px;
+}
+
+select.list-dt:focus {
+    border-bottom: 2px solid skyblue;
+}
+
+/*The background card*/
+.card {
+    z-index: 0;
+    border: none;
+    border-radius: 0.5rem;
+    position: relative;
+}
+
+/*FieldSet headings*/
+.fs-title {
+    font-size: 25px;
+    color: #2C3E50;
+    margin-bottom: 10px;
+    font-weight: bold;
+    text-align: left;
+}
+
+/*progressbar*/
+#progressbar {
+    margin-bottom: 30px;
+    overflow: hidden;
+    color: lightgrey;
+}
+
+#progressbar .active {
+    color: #000000;
+}
+
+#progressbar li {
+    list-style-type: none;
+    font-size: 12px;
+    width: 18%;
+    float: left;
+    position: relative;
+}
+
+/*Icons in the ProgressBar*/
+#progressbar #account:before {
+    font-family: FontAwesome;
+    content: "\f023";
+}
+
+#progressbar #personal:before {
+    font-family: FontAwesome;
+    content: "\f007";
+}
+
+#progressbar #payment:before {
+    font-family: FontAwesome;
+    content: "\f09d";
+}
+#progressbar #portability:before {
+    font-family: FontAwesome;
+    content: "\e4b3";
+}
+
+#progressbar #confirm:before {
+    font-family: FontAwesome;
+    content: "\f00c";
+}
+
+/*ProgressBar before any progress*/
+#progressbar li:before {
+    width: 50px;
+    height: 50px;
+    line-height: 45px;
+    display: block;
+    font-size: 18px;
+    color: #ffffff;
+    background: lightgray;
+    border-radius: 50%;
+    margin: 0 auto 10px auto;
+    padding: 2px;
+}
+
+/*ProgressBar connectors*/
+#progressbar li:after {
+    content: '';
+    width: 100%;
+    height: 2px;
+    background: lightgray;
+    position: absolute;
+    left: 0;
+    top: 25px;
+    z-index: -1;
+}
+
+/*Color number of the step and the connector before it*/
+#progressbar li.active:before, #progressbar li.active:after {
+    background: skyblue;
+}
+
+/*Imaged Radio Buttons*/
+.radio-group {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+.radio {
+    display:inline-block;
+    width: 204;
+    height: 104;
+    border-radius: 0;
+    background: lightblue;
+    box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+    cursor:pointer;
+    margin: 8px 2px;
+}
+
+.radio:hover {
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+.radio.selected {
+    box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0.1);
+}
+
+/*Fit image in bootstrap div*/
+.fit-image{
+    width: 100%;
+    object-fit: cover;
+}
+</style>
+
+<section class="page-title bg-2">
+  <div class="container mb-4">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="block">
+          <h1>Data Protection Self Assessment</h1>
+          <p class="">The DPA self assessment is divided into different categories. Read the items in each category and check the box if your organization has complied to the item, else, leave the box unchecked.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="container-fluid" id="grad1">
+    <div class="row justify-content-center mt-0">
+        <div class="col-12 col-sm-9 col-md-7 col-lg-10 text-center p-0 mt-3 mb-2">
+            <div class="card px-0 pt-4 pb-0 mt-3 mb-3">
+                <h2><strong>Compliance Self Assessment</strong></h2>
+                <p>Fill all form field to go to next step</p>
+                <div class="row">
+                    <div class="col-md-12 mx-0">
+                        <form id="msform" method="post">
+                            {% csrf_token %}
+                            <!-- progressbar -->
+                            <ul id="progressbar">
+                                <li class="active" id="account"><strong>Privacy</strong></li>
+                                <li id="personal"><strong>Sharing</strong></li>
+                                <li id="payment"><strong>Commercial</strong></li>
+                                <li id="portability"><strong>Portability</strong></li>
+                                <li id="confirm"><strong>Confirm</strong></li>
+                            </ul>
+                            <!-- fieldsets -->
+                            <fieldset>
+                                <div class="form-card">
+                                    <h2 class="fs-title">Privacy Rights</h2>
+
+                                      <div class="mb-2 pt-3">
+                                        <label class="form-label mr-4">Do you collect any customer data</label>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions14" id="inlineRadio14" value="option1" />
+                                          <label class="form-check-label" for="inlineRadio14">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions14" id="inlineRadio15" value="option2" />
+                                          <label class="form-check-label" for="inlineRadio15">No</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-2 pt-3">
+                                        <label class="form-label mr-4">How does your organization collect customer data?</label>
+                                        <div class="form-check ml-3">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2">
+                                          <label class="form-check-label" for="flexCheckDefault2">
+                                            Manually
+                                          </label>
+                                        </div>
+                                        <div class="form-check ml-3">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault3">
+                                          <label class="form-check-label" for="flexCheckDefault3">
+                                            Electronically
+                                          </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3 pt-3">
+                                      <label for="formGroupExampleInput2" class="form-label">Which parties have access to these data?</label>
+                                      <textarea class="form-control" id="formGroupExampleInput2" required="true" rows="2"></textarea>
+                                    </div>
+
+                                    <div class="mb-2 pt-3">
+                                        <label class="form-label mr-4">Are there administrative controls with stronger privilege access to customer data?</label>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions21" id="inlineRadio21" value="option1" />
+                                          <label class="form-check-label" for="inlineRadio21">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions21" id="inlineRadio22" value="option2" />
+                                          <label class="form-check-label" for="inlineRadio22">No</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-2 pt-3">
+                                        <label class="form-label mr-4">What form of data storage mechanism does the organization use?</label>
+                                        <div class="form-check ml-3">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault4">
+                                          <label class="form-check-label" for="flexCheckDefault4">
+                                            Applications (email, web, OS,)
+                                          </label>
+                                        </div>
+                                        <div class="form-check ml-3">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault5">
+                                          <label class="form-check-label" for="flexCheckDefault5">
+                                            Folders (shared network, local)
+                                          </label>
+                                        </div>
+                                        <div class="form-check ml-3">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault6">
+                                          <label class="form-check-label" for="flexCheckDefault6">
+                                            Databases
+                                          </label>
+                                        </div>
+                                        <div class="form-check ml-3">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault7">
+                                          <label class="form-check-label" for="flexCheckDefault7">
+                                            Cloud storage
+                                          </label>
+                                        </div>
+                                        <div class="form-check ml-3">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault8">
+                                          <label class="form-check-label" for="flexCheckDefault8">
+                                            Removable media
+                                          </label>
+                                        </div>
+                                        <div class="form-check ml-3">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault9">
+                                          <label class="form-check-label" for="flexCheckDefault9">
+                                            Physical locations (cabinets, safes)
+                                          </label>
+                                        </div>
+                                        <div class="form-check ml-3">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault10">
+                                          <label class="form-check-label" for="flexCheckDefault10">
+                                            Test and Development networks
+                                          </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3 pt-3">
+                                      <label class="form-label">What security controls has your organization implemented to secure data?</label>
+                                      <textarea class="form-control" id="" rows="2" required="true"></textarea>
+                                    </div>
+
+                                     <div class="mb-2 pt-3">
+                                        <label class="form-label mr-4">Is the organization prepared for a data breach</label>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions10" id="inlineRadio10" value="option1" />
+                                          <label class="form-check-label" for="inlineRadio10">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions10" id="inlineRadio11" value="option2" />
+                                          <label class="form-check-label" for="inlineRadio11">No</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3 pt-3">
+                                      <label class="form-label">If yes, what mechanisms are in place to handle data breach?</label>
+                                      <textarea class="form-control" id="exampleInputEmail1" rows="2"></textarea>
+                                    </div>
+
+                                    <div class="mb-2 pt-3">
+                                        <label class="form-label mr-4">How does your organization classify the data that they process according to risk levels </label>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions16" id="inlineRadio16" value="option1" />
+                                          <label class="form-check-label" for="inlineRadio16">Low</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions16" id="inlineRadio17" value="option2" />
+                                          <label class="form-check-label" for="inlineRadio17">Medium</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions16" id="inlineRadio18" value="option2" />
+                                          <label class="form-check-label" for="inlineRadio18">High</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-2 pt-3">
+                                        <label class="form-label mr-4">Does the organization provide anonymity to personally identifiable information of data subject?</label>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions12" id="inlineRadio12" value="option1" />
+                                          <label class="form-check-label" for="inlineRadio12">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions12" id="inlineRadio13" value="option2" />
+                                          <label class="form-check-label" for="inlineRadio13">No</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-2 pt-3">
+                                        <label class="form-label mr-4">Does the organization have a data privacy policy?</label>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions23" id="inlineRadio23" value="option1" />
+                                          <label class="form-check-label" for="inlineRadio23">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions23" id="inlineRadio24" value="option2" />
+                                          <label class="form-check-label" for="inlineRadio24">No</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-2 pt-3">
+                                        <label class="form-label mr-4">Does the organization updates its data privacy policy?(if necessary)</label>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions25" id="inlineRadio25" value="option1" />
+                                          <label class="form-check-label" for="inlineRadio25">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions25" id="inlineRadio26" value="option2" />
+                                          <label class="form-check-label" for="inlineRadio26">No</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3 pt-3">
+                                      <label for="formGroupExampleInput1" class="form-label">Which steps does your organization undertake to ensure that customers' personal data is accurate?</label>
+                                      <input type="text" class="form-control" id="formGroupExampleInput1" placeholder="Example input placeholder" required>
+                                    </div>
+
+                                </div>
+                                <input type="button" name="next" class="next action-button" value="Next Step"/>
+                            </fieldset>
+                            <fieldset>
+                                <div class="form-card">
+                                    <h2 class="fs-title">Sharing of Personal Data</h2>
+
+                                     <div class="mb-2 pt-3">
+                                        <label class="form-label mr-4">Does your organization share customers personally identifiable information(PII)?</label>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions27" id="inlineRadio27" value="option1" />
+                                          <label class="form-check-label" for="inlineRadio27">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions27" id="inlineRadio28" value="option2" />
+                                          <label class="form-check-label" for="inlineRadio28">No</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-2 pt-3">
+                                        <label class="form-label mr-4">Does the organization get consent from data subjects before sharing of their personally identifiable information with third parties?</label>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions4" id="inlineRadio4" value="option1" />
+                                          <label class="form-check-label" for="inlineRadio4">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions4" id="inlineRadio5" value="option2" />
+                                          <label class="form-check-label" for="inlineRadio5">No</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-2 pt-3">
+                                        <label class="form-label mr-4">Does the data subject voluntarily give consent?</label>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions44" id="inlineRadio44" value="option1" />
+                                          <label class="form-check-label" for="inlineRadio44">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions44" id="inlineRadio45" value="option2" />
+                                          <label class="form-check-label" for="inlineRadio45">No</label>
+                                        </div>
+                                    </div>
+
+                                     <div class="mb-2 pt-3">
+                                        <label class="form-label mr-4">Is the data processing in accordance to the consent?</label>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions46" id="inlineRadio46" value="option1" />
+                                          <label class="form-check-label" for="inlineRadio46">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions46" id="inlineRadio47" value="option2" />
+                                          <label class="form-check-label" for="inlineRadio47">No</label>
+                                        </div>
+                                         <input type="text" class="form-control" id="exampleInputEmail0" aria-describedby="emailHelp">
+                                         <div id="emailHelp" class="form-text">Please specify</div>
+                                    </div>
+
+                                    <div class="mb-2 pt-3">
+                                        <label class="form-label mr-4">In which form does your organization obtain consent from the data subject?</label>
+                                        <div class="form-check ml-3">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault43">
+                                          <label class="form-check-label" for="flexCheckDefault43">
+                                            Oral statement.
+                                          </label>
+                                        </div>
+                                        <div class="form-check ml-3">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault42">
+                                          <label class="form-check-label" for="flexCheckDefault42">
+                                            Written notice (email or printed.)
+                                          </label>
+                                        </div>
+                                        <div class="form-check ml-3">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault41">
+                                          <label class="form-check-label" for="flexCheckDefault41">
+                                            Video / Audio message.
+                                          </label>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="mb-2 pt-3">
+                                        <label class="form-label mr-4">How does your organization share customers' PII?</label>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions29" id="inlineRadio29" value="option1" />
+                                          <label class="form-check-label" for="inlineRadio29">Manually</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions29" id="inlineRadio30" value="option2" />
+                                          <label class="form-check-label" for="inlineRadio30">Electronically</label>
+                                        </div>
+                                    </div>
+
+                                      <div class="mb-2 pt-3">
+                                        <label class="form-label mr-4">Is it always a requirement for your organization to share personal data of data subjects with third parties?</label>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions31" id="inlineRadio31" value="option1" />
+                                          <label class="form-check-label" for="inlineRadio31">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions31" id="inlineRadio32" value="option2" />
+                                          <label class="form-check-label" for="inlineRadio32">No</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-2 pt-3">
+                                        <label class="form-label mr-4">Is there visibility to and monitoring of data wherever they may flow?</label>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions33" id="inlineRadio33" value="option1" />
+                                          <label class="form-check-label" for="inlineRadio33">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions33" id="inlineRadio34" value="option2" />
+                                          <label class="form-check-label" for="inlineRadio34">No</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-2 pt-3">
+                                        <label class="form-label mr-4">Does management have an access management strategy for data that have left the corporate network’s boarders?</label>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions35" id="inlineRadio35" value="option1" />
+                                          <label class="form-check-label" for="inlineRadio35">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions35" id="inlineRadio36" value="option2" />
+                                          <label class="form-check-label" for="inlineRadio36">No</label>
+                                        </div>
+                                    </div>
+
+<!--                                    <div class="mb-3 pt-3">-->
+<!--                                      <label for="formGroupExampleInput3" class="form-label">How do yo transport data</label>-->
+<!--                                      <input type="text" class="form-control" id="formGroupExampleInput3" placeholder="Another input placeholder">-->
+<!--                                    </div>-->
+                                </div>
+                                <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
+                                <input type="button" name="next" class="next action-button" value="Next Step"/>
+                            </fieldset>
+
+                            <fieldset>
+                                <div class="form-card">
+                                    <h2 class="fs-title">Commercial use of personal data</h2>
+                                    <div class="mb-3 pt-3">
+                                      <label class="form-label">How does the business keep its data inventory complete on an ongoing basis?</label>
+                                      <textarea class="form-control" rows="2"></textarea>
+                                    </div>
+                                    <div class="mb-2 pt-3">
+                                        <label class="form-label mr-4">Has the organization gotten consent from a data subject for purposes of direct marketing?</label>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions1" id="inlineRadio1" value="option1" />
+                                          <label class="form-check-label" for="inlineRadio1">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions1" id="inlineRadio2" value="option2" />
+                                          <label class="form-check-label" for="inlineRadio2">No</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-2 pt-3">
+                                        <label class="form-label mr-4">Has the organization presented consent information through:</label>
+                                        <div class="form-check ml-3">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                          <label class="form-check-label" for="flexCheckDefault">
+                                            Written notice.
+                                          </label>
+                                        </div>
+                                        <div class="form-check ml-3">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1">
+                                          <label class="form-check-label" for="flexCheckDefault1">
+                                            Oral statement.
+                                          </label>
+                                        </div>
+                                        <div class="form-check ml-3">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault39">
+                                          <label class="form-check-label" for="flexCheckDefault39">
+                                            Audio / Video message
+                                          </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-2 pt-3">
+                                        <label class="form-label mr-4">Does the data subject voluntarily gives consent or it is mandatory before they get access to your organization’s services?</label>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions37" id="inlineRadio37" value="option1" />
+                                          <label class="form-check-label" for="inlineRadio37">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions37" id="inlineRadio38" value="option2" />
+                                          <label class="form-check-label" for="inlineRadio38">No</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-2 pt-3">
+                                        <label class="form-label mr-4">Has the organization informed the data subject of its identity before collection and processing of personal data?</label>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions50" id="inlineRadio50" value="option1" />
+                                          <label class="form-check-label" for="inlineRadio50">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions50" id="inlineRadio51" value="option2" />
+                                          <label class="form-check-label" for="inlineRadio51">No</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-2 pt-3">
+                                        <label class="form-label mr-4">How does the organization collect this personal data?</label>
+                                        <div class="form-check ml-3">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault52">
+                                          <label class="form-check-label" for="flexCheckDefault52">
+                                            Publications or databases.
+                                          </label>
+                                        </div>
+                                        <div class="form-check ml-3">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault53">
+                                          <label class="form-check-label" for="flexCheckDefault53">
+                                            Surveillance cameras, where an individual is identifiable or reasonably identifiable.
+                                          </label>
+                                        </div>
+                                        <div class="form-check ml-3">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault54">
+                                          <label class="form-check-label" for="flexCheckDefault54">
+                                            Information associated with web browsing.
+                                          </label>
+                                        </div>
+                                        <div class="form-check ml-3">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault55">
+                                          <label class="form-check-label" for="flexCheckDefault55">
+                                            Biometric technology, including voice or facial recognition
+                                          </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-2 pt-3">
+                                        <label class="form-label mr-4">Does the organization clearly indicate that a data subject may opt out of receiving future messages by replying with a single word instruction?</label>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions65" id="inlineRadio65" value="option1" />
+                                          <label class="form-check-label" for="inlineRadio65">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions65" id="inlineRadio66" value="option2" />
+                                          <label class="form-check-label" for="inlineRadio65">No</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-2 pt-3">
+                                        <label class="form-label mr-4">Does the organization ensure that a link is prominently located in the email, which takes a data subject to a subscription control centre?</label>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions71" id="inlineRadio71" value="option1" />
+                                          <label class="form-check-label" for="inlineRadio71">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions71" id="inlineRadio72" value="option2" />
+                                          <label class="form-check-label" for="inlineRadio72">No</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-2 pt-3">
+                                        <label class="form-label mr-4">Does the organization Inform the recipient of a direct marketing phone call that they can verbally opt out from any future calls?</label>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions67" id="inlineRadio67" value="option1" />
+                                          <label class="form-check-label" for="inlineRadio67">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions67" id="inlineRadio68" value="option2" />
+                                          <label class="form-check-label" for="inlineRadio68">No</label>
+                                        </div>
+                                    </div>
+
+                                     <div class="mb-2 pt-3">
+                                        <label class="form-label mr-4">Does the organization include instructions on how to opt out from future direct marketing, in each message?</label>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions69" id="inlineRadio69" value="option1" />
+                                          <label class="form-check-label" for="inlineRadio69">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions69" id="inlineRadio70" value="option2" />
+                                          <label class="form-check-label" for="inlineRadio70">No</label>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
+                                <input type="button" name="next" class="next action-button" value="Next Step"/>
+                            </fieldset>
+
+                            <fieldset>
+                                <div class="form-card">
+                                    <h2 class="fs-title">Data Portability</h2>
+
+                                     <div class="mb-2 pt-3">
+                                        <label class="form-label mr-4">Does your organization share customers personally identifiable information(PII)?</label>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio48" value="option1" />
+                                          <label class="form-check-label" for="inlineRadio48">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio49" value="option2" />
+                                          <label class="form-check-label" for="inlineRadio49">No</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3 pt-3">
+                                      <label for="formGroupExampleInput3" class="form-label">How does your organization make data unavailable to third party?</label>
+                                      <input type="text" class="form-control" id="formGroupExampleInput3" placeholder="Response">
+                                    </div>
+
+                                    <div class="mb-2 pt-3">
+                                        <label class="form-label mr-4">Does the organization confirm the identity of the data subject making the request?</label>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions52" id="inlineRadio52" value="option1" />
+                                          <label class="form-check-label" for="inlineRadio52">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions52" id="inlineRadio53" value="option2" />
+                                          <label class="form-check-label" for="inlineRadio53">No</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-2 pt-3">
+                                        <label class="form-label mr-4">Has the organization encrypted the personal data that is being ported?</label>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions54" id="inlineRadio54" value="option1" />
+                                          <label class="form-check-label" for="inlineRadio54">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions54" id="inlineRadio55" value="option2" />
+                                          <label class="form-check-label" for="inlineRadio55">No</label>
+                                        </div>
+                                    </div>
+
+                                     <div class="mb-2 pt-3">
+                                        <label class="form-label mr-4">Does the organization within seven days notify the data subject of the decline of portability request and reasons for such decline in writing?</label>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions60" id="inlineRadio60" value="option1" />
+                                          <label class="form-check-label" for="inlineRadio46">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions60" id="inlineRadio61" value="option2" />
+                                          <label class="form-check-label" for="inlineRadio47">No</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-2 pt-3">
+                                        <label class="form-label mr-4">How is this personal data extracted and transferred?</label>
+                                        <div class="form-check ml-3">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault56">
+                                          <label class="form-check-label" for="flexCheckDefault56">
+                                            Downloads over the internet [website]
+                                          </label>
+                                        </div>
+                                        <div class="form-check ml-3">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault57">
+                                          <label class="form-check-label" for="flexCheckDefault56">
+                                            Transfer through online messaging platforms [e-mail, slack, WhatsApp, telegram]
+                                          </label>
+                                        </div>
+                                        <div class="form-check ml-3">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault58">
+                                          <label class="form-check-label" for="flexCheckDefault56">
+                                            Transfer through data storage devices [USB, hard drives
+                                          </label>
+                                        </div>
+                                        <div class="form-check ml-3">
+                                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault59">
+                                          <label class="form-check-label" for="flexCheckDefault59">
+                                            Transfer though printed medium [files, parcel, pamphlets, photocopy papers
+                                          </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-2 pt-3">
+                                        <label class="form-label mr-4">Does the organization port personal data to the data subject’s choice of recipient within thirty days of request upon payment of the prescribed fees?</label>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions63" id="inlineRadio63" value="option1" />
+                                          <label class="form-check-label" for="inlineRadio29">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="inlineRadioOptions63" id="inlineRadio64" value="option2" />
+                                          <label class="form-check-label" for="inlineRadio30">No</label>
+                                        </div>
+                                    </div>
+
+<!--                                      <div class="mb-2 pt-3">-->
+<!--                                        <label class="form-label mr-4">Is it always a requirement for your organization to share personal data of data subjects with third parties?</label>-->
+<!--                                        <div class="form-check form-check-inline">-->
+<!--                                          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio31" value="option1" />-->
+<!--                                          <label class="form-check-label" for="inlineRadio31">Yes</label>-->
+<!--                                        </div>-->
+<!--                                        <div class="form-check form-check-inline">-->
+<!--                                          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio32" value="option2" />-->
+<!--                                          <label class="form-check-label" for="inlineRadio32">No</label>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+
+<!--                                    <div class="mb-2 pt-3">-->
+<!--                                        <label class="form-label mr-4">Is there visibility to and monitoring of data wherever they may flow?</label>-->
+<!--                                        <div class="form-check form-check-inline">-->
+<!--                                          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio33" value="option1" />-->
+<!--                                          <label class="form-check-label" for="inlineRadio33">Yes</label>-->
+<!--                                        </div>-->
+<!--                                        <div class="form-check form-check-inline">-->
+<!--                                          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio34" value="option2" />-->
+<!--                                          <label class="form-check-label" for="inlineRadio34">No</label>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+
+<!--                                    <div class="mb-2 pt-3">-->
+<!--                                        <label class="form-label mr-4">Does management have an access management strategy for data that have left the corporate network’s boarders?</label>-->
+<!--                                        <div class="form-check form-check-inline">-->
+<!--                                          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio35" value="option1" />-->
+<!--                                          <label class="form-check-label" for="inlineRadio35">Yes</label>-->
+<!--                                        </div>-->
+<!--                                        <div class="form-check form-check-inline">-->
+<!--                                          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio36" value="option2" />-->
+<!--                                          <label class="form-check-label" for="inlineRadio36">No</label>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+
+                                </div>
+                                <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
+                                <a href="{% url 'checklist:checklist' %}"><input type="button" name="make_payment" class="next action-button" value="Confirm"/></a>
+
+                            </fieldset>
+
+                            <fieldset>
+                                <div class="form-card">
+                                    <h2 class="fs-title text-center">Success !</h2>
+                                    <br><br>
+                                    <div class="row justify-content-center">
+                                        <div class="col-3">
+                                           <img src="https://img.icons8.com/color/96/000000/ok--v2.png" class="fit-image">
+                                        </div>
+                                    </div>
+                                    <br><br>
+                                    <div class="row justify-content-center">
+                                        <div class="col-7 text-center">
+                                            <h5>You have successfully completed your self assessment to DPA compliance</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

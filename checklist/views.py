@@ -1,8 +1,9 @@
-import io
 import pandas as pd
+import weasyprint
 import os
 
 from PIL import Image, ImageFont, ImageDraw
+
 from reportlab.pdfgen import canvas
 
 from django.conf import settings
@@ -15,6 +16,7 @@ from django.views.generic import TemplateView, ListView, DetailView
 from django.views.generic.edit import FormView
 from django.http import HttpResponse, FileResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
+from django.template.loader import render_to_string
 
 from .models import Checklist, Category, UserChecklistEntries, PoliciesDocuments
 from .forms import UploadForm, PoliciesUploadForm
@@ -189,7 +191,7 @@ def generate_certificate(request):
     return FileResponse(open(f'{data_list["user"]} Compliance cert.pdf', 'rb'), as_attachment=True, content_type='application/pdf')
 
 
-class ImpactAssessmentView(TemplateView):
+class ImpactAssessmentView(LoginRequiredMixin, TemplateView):
     template_name = 'dpia.html'
 
 
@@ -203,5 +205,53 @@ class IEnforceView(TemplateView):
 
 class IComplyManagerView(TemplateView):
     template_name = 'icomply_manager.html'
+
+
+@login_required(login_url='account_login')
+def result_pdf_reports(request):
+    try:
+        entries = get_object_or_404(UserChecklistEntries.objects.filter(user=request.user))
+    except MultipleObjectsReturned:
+        entries = UserChecklistEntries.objects.filter(user=request.user).order_by('-date_filled').first()
+
+    html = render_to_string('pdf.html', {'entries': entries})
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'filename=compliance_{request.user}.pdf'
+    weasyprint.HTML(string=html).write_pdf(response, stylesheets=[weasyprint.CSS(
+        settings.STATIC_ROOT + '/css/style.css')])
+
+    return response
+
+
+@login_required(login_url='account_login')
+def cert_pdf(request):
+    try:
+        entries = get_object_or_404(UserChecklistEntries.objects.filter(user=request.user))
+    except MultipleObjectsReturned:
+        entries = UserChecklistEntries.objects.filter(user=request.user).order_by('-date_filled').first()
+
+    html = render_to_string('cert.html', {'entries': entries})
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'filename=compliance_{request.user}.pdf'
+    weasyprint.HTML(string=html).write_pdf(response, stylesheets=[weasyprint.CSS(
+        settings.STATIC_ROOT + '/css/style.css')])
+
+    if entries.percent_s > 70:
+        return response
+    else:
+        return redirect('checklist:nocert')
+
+        # return HttpResponse('Please increase your compliance level to get a certificate')
+        # return f'Please increase your compliance level to get a certificate'
+
+    # return response
+
+
+class ChecklistDemoView(LoginRequiredMixin, TemplateView):
+    template_name = 'checklist_demo.html'
+
+
+class NoCertView(TemplateView):
+    template_name = 'nocert.html'
 
 

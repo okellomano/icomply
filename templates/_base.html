@@ -55,7 +55,7 @@
 			<div class="col-lg-12">
 				<nav class="navbar navbar-expand-lg p-0 fixed-top navbar-light bg-light"><!-- style="background-color: #e3f2fd;"-->
 					<a class="navbar-brand" href="{% url 'checklist:home' %}">
-						<img src="{% static 'images/logo.png' %}" height="80" width="200" alt="Logo">
+						<img src="{% static 'images/logo.png' %}" height="80" width="200" alt="">
 					</a>
 
 					<button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded="false" aria-label="Toggle navigation">
@@ -73,8 +73,9 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown0">
                           <li><a class="dropdown-item" href="{% url 'checklist:impact-assessment' %}">DPIA</a></li>
-                          <li><a class="nav-link white" href="{% url 'checklist:checklist' %}">Checklist</a></li>
-                          <li><a class="nav-link" href="{% url 'checklist:icomplymanager' %}">iComply Manager</a></li>
+                          <li><a class="nav-link white" href="{% url 'checklist:checklist-demo' %}">Self Assessment</a></li>
+                            <li><a class="nav-link white" href="{% url 'checklist:checklist' %}">Compliance checklist</a></li>
+<!--                          <li><a class="nav-link" href="{% url 'checklist:icomplymanager' %}">iComply Manager</a></li>-->
                           <li><a class="nav-link" href="{% url 'checklist:ienforce' %}">iEnforce DPA</a></li>
                           <li><a class="nav-link" href="{% url 'checklist:ilearndpa' %}">iLearnDPA</a></li>
                         </ul>
@@ -88,6 +89,9 @@
                           Resources
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <li class="dropdown-item"><a class="nav-link" href="{% url 'checklist:user-results' %}">View Report</a></li>
+                          <li class="dropdown-item"><a class="nav-link" href="{% url 'checklist:report' %}">Generate PDF Report</a></li>
+                            <li class="dropdown-item"><a class="nav-link" href="{% url 'checklist:cert' %}">Generate Certificate</a></li>
                           <li><a class="dropdown-item" href="{% url 'checklist:dpa' %}">DPA</a></li>
                           <li><a class="dropdown-item" href="{% url 'checklist:dpa_regulations' %}">Regulations</a></li>
                           <li><a class="dropdown-item" href="{% url 'checklist:dpia' %}">DPIA Template</a></li>
@@ -110,8 +114,6 @@
                           {{ user.username.title }}
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
-                            <li class="dropdown-item"><a class="nav-link" href="{% url 'checklist:user-results' %}">Reports</a></li>
-<!--                            <li class="dropdown-item"><a class="nav-link" href="{% url 'checklist:gen_cert' %}">Certificate</a></li>-->
                             <li class="dropdown-item"><a class="nav-link" href="{% url 'account_logout' %}">Logout</a></li>
                         </ul>
                       </li>
@@ -141,6 +143,11 @@
     <script src="{% static 'js/assessment.js' %}"></script>
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+
+    <!---------------- checklist demo ----------------->
+    <script src="{% static 'js/checklist_demo.js' %}"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js' crossorigin='anonymous'></script>
   </body>
 </html>
 
